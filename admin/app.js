@@ -1,12 +1,12 @@
 var app = angular.module('gerProjAdmin', [
     'ngResource',
-    'infinite-scroll',
-    'angularSpinner',
+//    'infinite-scroll',
+//    'angularSpinner',
     'jcs-autoValidate',
     'angular-ladda',
     'mgcrea.ngStrap',
-    'toaster',
-    'ngAnimate',
+//    'toaster',
+//    'ngAnimate',
     'ui.router'
 ]);
 
@@ -26,10 +26,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'main': {
                         templateUrl: 'templates/cliente-list.html',
-                        controller: 'ClienteListController'
-                    },
-                    'search': {
-                        templateUrl: 'templates/cliente-search.html',
                         controller: 'ClienteListController'
                     }
                 }
@@ -53,16 +49,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 }
             });
 
-    $urlRouterProvider.otherwise('/cliente/list');
+    $urlRouterProvider.otherwise("/cliente/list");
 });
 
-app.config(function ($resourceProvider, laddaProvider, $datepickerProvider) {
+app.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
     laddaProvider.setOption({
         style: 'expand-right'
     });
-    angular.extend($datepickerProvider.defaults, {
-        dateFormat: 'd/M/yyyy',
-        autoclose: true
-    });
+//    angular.extend($datepickerProvider.defaults, {
+//        dateFormat: 'd/M/yyyy',
+//        autoclose: true
+//    });
 });
