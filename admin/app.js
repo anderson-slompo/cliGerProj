@@ -1,16 +1,17 @@
-var app = angular.module('gerProjAdmin', [
+var appGerProjAdmin = angular.module('gerProjAdmin', [
     'ngResource',
-//    'infinite-scroll',
-//    'angularSpinner',
+    'angularSpinner',
     'jcs-autoValidate',
     'angular-ladda',
     'mgcrea.ngStrap',
-//    'toaster',
-//    'ngAnimate',
+    'toaster',
+    'ngAnimate',
     'ui.router'
 ]);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+var wsHost = "http://localhost.wsGerProj/admin/";
+
+appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
             .state('login', {
                 url: "/login",
@@ -52,7 +53,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/cliente/list");
 });
 
-app.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
+appGerProjAdmin.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
     laddaProvider.setOption({
         style: 'expand-right'
@@ -61,4 +62,15 @@ app.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */
 //        dateFormat: 'd/M/yyyy',
 //        autoclose: true
 //    });
+});
+
+appGerProjAdmin.directive('ccSpinner', function () {
+	return {
+		'restrict': 'AE',
+		'templateUrl': 'templates/spinner.html',
+		'scope': {
+			'isLoading': '=',
+			'message': '@'
+		}
+	}
 });
