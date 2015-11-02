@@ -40,7 +40,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                     }
                 }
             })
-            .state('create', {
+            .state('cliente-create', {
                 url: "/cliente/create",
                 views: {
                     'main': {

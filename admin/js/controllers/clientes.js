@@ -1,6 +1,6 @@
 
 appGerProjAdmin.factory("Cliente", function ($resource) {
-    return $resource(wsHost+"clientes/:id/", {id: '@id'}, {
+    return $resource(wsHost + "clientes/:id/", {id: '@id'}, {
         update: {
             method: 'PUT'
         }
@@ -13,6 +13,15 @@ appGerProjAdmin.controller("ClienteCreateController", function ($scope, $state, 
     $scope.page_title = "Novo Cliente";
     $scope.cli_codigo = 0;
     $scope.clientes = ClienteService;
+    $scope.submit_action = "Salvar";
+    $scope.clientes.selectedCliente = {};
+
+    $scope.save = function () {
+        $scope.clientes.createCliente($scope.clientes.selectedCliente)
+                .then(function () {
+                    $state.go("cliente-list");
+                })
+    };
 
 });
 appGerProjAdmin.controller("ClienteEditController", function ($scope, $stateParams, $state, ClienteService) {
@@ -20,6 +29,7 @@ appGerProjAdmin.controller("ClienteEditController", function ($scope, $statePara
     $scope.page_title = "Alterar Cliente";
     $scope.cli_codigo = $stateParams.id;
     $scope.clientes = ClienteService;
+    $scope.submit_action = "Salvar Alterações";
 
 });
 
@@ -34,7 +44,7 @@ appGerProjAdmin.controller('ClienteListController', function ($scope, $modal, Cl
     $scope.loadMore = function () {
         $scope.clientes.loadMore();
     };
-    $scope.doSearch = function(){
+    $scope.doSearch = function () {
         $scope.clientes.doSearch();
     }
     $scope.clientes.loadClientes();
@@ -53,7 +63,7 @@ appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toa
         'hasMore': true,
         'isLoading': false,
         'isSaving': false,
-        'selectedPerson': null,
+        'selectedCliente': null,
         'clientes': [],
         'search_id': null,
         'search_nome': null,
@@ -120,7 +130,7 @@ appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toa
                 self.isDeleting = false;
                 var index = self.clientes.indexOf(cli);
                 self.clientes.splice(index, 1);
-                self.selectedPerson = null;
+                self.selectedCliente = null;
                 toaster.pop('success', 'Excluido #' + cliente.id + ' ' + cli.name);
                 d.resolve()
             });
@@ -131,12 +141,12 @@ appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toa
             self.isSaving = true;
             Cliente.save(cli).$promise.then(function () {
                 self.isSaving = false;
-                self.selectedPerson = null;
+                self.selectedCliente = null;
                 self.hasMore = true;
                 self.page = 1;
                 self.clientes = [];
-                self.loadClientes();
-                toaster.pop('success', 'Criado ' + cliente.nome);
+//                self.loadClientes();
+                toaster.pop('success', 'Criado ' + cli.nome);
                 d.resolve()
             });
             return d.promise;
