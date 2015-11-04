@@ -13,6 +13,7 @@
         <link href="../bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" rel="stylesheet" >
         <link href="../bower_components/AngularJS-Toaster/toaster.min.css" rel="stylesheet" >
 	<link href="../bower_components/ladda/dist/ladda-themeless.min.css" rel="stylesheet" >
+        <link href="../bower_components/AngularJS-Toaster/toaster.min.css" rel="stylesheet" >
 
         <!-- Timeline CSS -->
         <link href="css/timeline.css" rel="stylesheet">
@@ -39,7 +40,7 @@
 
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'templates/top.html'"></nav>
-
+            <toaster-container></toaster-container>
             <div id="page-wrapper" ui-view="main" ></div>
             <!-- /#page-wrapper -->
 
@@ -54,6 +55,7 @@
         <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
         <script src="../bower_components/angular-auto-validate/dist/jcs-auto-validate.min.js"></script>
         <script src="../bower_components/angular-strap/dist/angular-strap.min.js"></script>
+        <script src="../bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
         <script src="../bower_components/angular-ladda/dist/angular-ladda.min.js"></script>
 
         <script src="../bower_components/spin.js/spin.js"></script>

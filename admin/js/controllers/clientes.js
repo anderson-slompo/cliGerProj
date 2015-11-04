@@ -1,4 +1,3 @@
-
 appGerProjAdmin.factory("Cliente", function ($resource) {
     return $resource(wsHost + "clientes/:id/", {id: '@id'}, {
         update: {
@@ -6,8 +5,6 @@ appGerProjAdmin.factory("Cliente", function ($resource) {
         }
     });
 });
-
-
 appGerProjAdmin.controller("ClienteCreateController", function ($scope, $state, ClienteService) {
 
     $scope.page_title = "Novo Cliente";
@@ -31,8 +28,15 @@ appGerProjAdmin.controller("ClienteEditController", function ($scope, $statePara
     $scope.clientes = ClienteService;
     $scope.submit_action = "Salvar Alterações";
 
-});
+    $scope.clientes.selectedCliente = ClienteService.getCliente($stateParams.id);
 
+    $scope.save = function () {
+        $scope.clientes.updateCliente($scope.clientes.selectedCliente).then(function () {
+            $state.go("cliente-list");
+        })
+    };
+
+});
 appGerProjAdmin.controller('ClienteListController', function ($scope, $modal, ClienteService) {
     $scope.page_title = "Relatório de Clientes";
     $scope.clientes = ClienteService;
@@ -46,18 +50,18 @@ appGerProjAdmin.controller('ClienteListController', function ($scope, $modal, Cl
     };
     $scope.doSearch = function () {
         $scope.clientes.doSearch();
-    }
-    $scope.clientes.loadClientes();
+    };
+    $scope.remove = function (cli) {
+        $scope.clientes.removeCliente(cli).then(function () {
+            $state.go("list");
+        });
+    };
+    $scope.clientes.doSearch();
 });
-
 appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toaster) {
-
-
     var self = {
-        'getPerson': function (id) {
-            Cliente.get(params, function (data) {
-                console.log(data);
-            });
+        'getCliente': function (id) {
+            return Cliente.get({id: id});
         },
         'page': 1,
         'hasMore': true,
@@ -116,10 +120,16 @@ appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toa
         'updateCliente': function (cli) {
             var d = $q.defer();
             self.isSaving = true;
-            cli.$update().then(function () {
+            cli.$update().then(function (data) {
                 self.isSaving = false;
-                toaster.pop('success', 'Atualizado #' + cliente.id + ' ' + cliente.nome);
-                d.resolve()
+                toaster.pop('success', data.message);
+                d.resolve();
+            }, function (error) {
+                toaster.pop({
+                    type: 'error',
+                    body: 'Erro ao atualizar cliente #' + cli.id + '<br/>' + error.data.error.nl2br(),
+                    bodyOutputType: 'trustedHtml'
+                });
             });
             return d.promise;
         },
@@ -131,28 +141,37 @@ appGerProjAdmin.service('ClienteService', function (Cliente, $rootScope, $q, toa
                 var index = self.clientes.indexOf(cli);
                 self.clientes.splice(index, 1);
                 self.selectedCliente = null;
-                toaster.pop('success', 'Excluido #' + cliente.id + ' ' + cli.name);
-                d.resolve()
+                toaster.pop('success', 'Cliente removido com sucesso');
+                d.resolve();
+            }, function (error) {
+                toaster.pop({
+                    type: 'error',
+                    body: 'Erro ao remover cliente #' + cli.id + '<br/>' + error.data.error.nl2br(),
+                    bodyOutputType: 'trustedHtml'
+                });
             });
             return d.promise;
         },
         'createCliente': function (cli) {
             var d = $q.defer();
             self.isSaving = true;
-            Cliente.save(cli).$promise.then(function () {
+            Cliente.save(cli).$promise.then(function (data) {
                 self.isSaving = false;
                 self.selectedCliente = null;
                 self.hasMore = true;
                 self.page = 1;
                 self.clientes = [];
-//                self.loadClientes();
-                toaster.pop('success', 'Criado ' + cli.nome);
-                d.resolve()
+                toaster.pop('success', data.message);
+                d.resolve();
+            }, function (error) {
+                toaster.pop({
+                    type: 'error',
+                    body: 'Erro ao inserir cliente:<br/>' + error.data.error.nl2br(),
+                    bodyOutputType: 'trustedHtml'
+                });
             });
             return d.promise;
         }
     };
-
     return self;
-
 });

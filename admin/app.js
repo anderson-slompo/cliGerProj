@@ -1,3 +1,7 @@
+String.prototype.nl2br = function()
+{
+    return this.replace(/\n/g, "<br />");
+}
 var appGerProjAdmin = angular.module('gerProjAdmin', [
     'ngResource',
     'angularSpinner',
@@ -54,7 +58,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 appGerProjAdmin.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
-    $resourceProvider.defaults.stripTrailingSlashes = false;
+    $resourceProvider.defaults.stripTrailingSlashes = true;
     laddaProvider.setOption({
         style: 'expand-right'
     });

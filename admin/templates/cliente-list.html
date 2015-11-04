@@ -48,6 +48,7 @@
                                 <th class="text-center">ID</th>
                                 <th>Nome</th>
                                 <th class="text-center">ID Externo</th>
+                                <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +56,10 @@
                                 <td class="text-center">{{cli.id}}</td>
                                 <td>{{cli.nome}}</td>
                                 <td class="text-center">{{cli.id_externo}}</td>
+                                <td class="text-center">
+                                    <a ui-sref="cliente-edit({id: cli.id})" class="fa fa-pencil" title="Editar cliente #{{cli.id}}"></a>&nbsp;
+                                    <a class="fa fa-trash-o" title="Remover cliente #{{cli.id}}" ng-click="remove(cli)" href="javascript:void(0)"></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
