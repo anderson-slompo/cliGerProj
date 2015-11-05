@@ -52,9 +52,11 @@ appGerProjAdmin.controller('ClienteListController', function ($scope, $modal, Cl
         $scope.clientes.doSearch();
     };
     $scope.remove = function (cli) {
-        $scope.clientes.removeCliente(cli).then(function () {
-            $state.go("list");
-        });
+        if(confirm("Deseja mesmo remover o cliente #"+cli.id+" "+cli.nome+"?")){
+            $scope.clientes.removeCliente(cli).then(function () {
+                $state.go("list");
+            });
+        }
     };
     $scope.clientes.doSearch();
 });
