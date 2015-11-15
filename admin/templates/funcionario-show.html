@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"> {{page_title}} </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Funcionario #{{fun_codigo}}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Nome:</div>
+                            <div class="col-lg-4">{{funcionarios.selectedFuncionario.nome}}</div>
+                            
+                            <div class="col-lg-2 text-right">Status:</div>
+                            <div class="col-lg-4">{{funcionarios.selectedFuncionario.status ? "Ativo": "Inativo"}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Data Nascimento:</div>
+                            <div class="col-lg-4">{{funcionarios.selectedFuncionario.data_nascimento|date:"dd/MM/yyyy"}}</div>
+                            
+                            <div class="col-lg-2 text-right">Data Adminissao:</div>
+                            <div class="col-lg-4">{{funcionarios.selectedFuncionario.data_admissao|date:"dd/MM/yyyy"}}</div>
+                        </div>
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="button" class="btn btn-default btn-success"><i class="fa fa-pencil"></i> Editar</button>
+                        <button type="button" class="btn btn-default btn-danger"><i class="fa fa-trash-o"></i> Remover</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

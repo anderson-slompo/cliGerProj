@@ -17,6 +17,15 @@ var wsHost = "http://localhost.wsGerProj/admin/";
 
 appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
+            .state('home', {
+                url: "/",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/home.html',
+                        controller: 'HomeController'
+                    }
+                }
+            })
             .state('login', {
                 url: "/login",
                 views: {
@@ -52,9 +61,45 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'ClienteCreateController'
                     }
                 }
+            })
+            .state('funcionario-list', {
+                url: "/funcionario/list",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/funcionario-list.html',
+                        controller: 'FuncionarioListController'
+                    }
+                }
+            })
+            .state('funcionario-show', {
+                url: "/funcionario/show/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/funcionario-show.html',
+                        controller: 'FuncionarioShowController'
+                    }
+                }
+            })
+            .state('funcionario-edit', {
+                url: "/funcionario/edit/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/funcionario-edit.html',
+                        controller: 'FuncionarioEditController'
+                    }
+                }
+            })
+            .state('funcionario-create', {
+                url: "/funcionario/create",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/funcionario-edit.html',
+                        controller: 'FuncionarioCreateController'
+                    }
+                }
             });
 
-    $urlRouterProvider.otherwise("/cliente/list");
+    $urlRouterProvider.otherwise("/");
 });
 
 appGerProjAdmin.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
