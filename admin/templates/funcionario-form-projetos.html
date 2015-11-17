@@ -1,0 +1,38 @@
+
+<div class="col-lg-4 col-lg-offset-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">Projetos Disponíveis</div>
+        <div class="panel-body form-group">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control" 
+                ng-multiple="true" 
+                ng-model="comboProjeto.disponiveis"
+                ng-options="option.nome for option in projetos track by option.id">
+            </select>
+            <p class="help-block text-center">Selecione os projetos desejados e clique no botão <span class="glyphicon glyphicon-forward"></span> para associá-los.</p>
+        </div>
+    </div>
+</div>
+<div class="col-lg-1 text-center" style="padding-top: 9%">
+    <div class="btn-group-vertical" role="group">
+        <button type="button" title="Atribuir Projetos" class="btn btn-info btn-sm glyphicon glyphicon-forward" ng-click="addProjeto()"></button>    
+        <button type="button" title="Desatribuir Projetos" class="btn btn-info btn-sm glyphicon glyphicon-backward" ng-click="rmProjeto()"></button>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Projetos Atribuídos</div>
+        <div class="panel-body form-group">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control" 
+                ng-model="comboProjeto.associados"
+                ng-options="option.nome for option in funcionarios.selectedFuncionario.projetos track by option.id">
+            </select>
+            <p class="help-block text-center">Selecione os projetos desejados e clique no botão <span class="glyphicon glyphicon-backward"></span> para desassociá-los.</p>
+        </div>
+    </div>
+</div>

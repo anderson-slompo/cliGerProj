@@ -1,0 +1,39 @@
+
+<div class="col-lg-4 col-lg-offset-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">Departamentos Disponíveis</div>
+        <div class="panel-body">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control"
+                ng-multiple="true"
+                ng-model="comboDepartamento.disponiveis"
+                ng-options="departamento.descricao for departamento in departamentos track by departamento.id">
+            </select>
+            <p class="help-block text-center">Selecione os departamentos desejados e clique no botão <span class="glyphicon glyphicon-backward"></span> para associá-los.</p>
+        </div>
+    </div>
+</div>
+<div class="col-lg-1 text-center" style="padding-top: 9%">
+    <div class="btn-group-vertical" role="group">
+        <button type="button" title="Atribuir Departamentos" class="btn btn-info btn-sm glyphicon glyphicon-forward" ng-click="addDepartamento()"></button>    
+        <button type="button" title="Desatribuir Departamentos" class="btn btn-info btn-sm glyphicon glyphicon-backward" ng-click="rmDepartamento()"></button>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Departamentos Atribuídos</div>
+        <div class="panel-body">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control"
+                ng-multiple="true"
+                ng-model="comboDepartamento.associados"
+                ng-options="departamento.descricao for departamento in funcionarios.selectedFuncionario.departamentos track by departamento.id">
+            </select>
+            <p class="help-block text-center">Selecione os departamentos desejados e clique no botão <span class="glyphicon glyphicon-backward"></span> para desassociá-los.</p>
+        </div>
+    </div>
+</div>

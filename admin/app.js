@@ -1,4 +1,4 @@
-String.prototype.nl2br = function()
+String.prototype.nl2br = function ()
 {
     return this.replace(/\n/g, "<br />");
 }
@@ -15,6 +15,19 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
 ]);
 
 var wsHost = "http://localhost.wsGerProj/admin/";
+
+appGerProjAdmin.directive('preventEnter', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            element.bind('keydown keypress keyup', function (event) {
+                if (event.keyCode == 13 && !event.shiftKey) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+});
 
 appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -103,7 +116,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
-appGerProjAdmin.config(function ($resourceProvider, laddaProvider , $datepickerProvider) {
+appGerProjAdmin.config(function ($resourceProvider, laddaProvider, $datepickerProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = true;
     laddaProvider.setOption({
         style: 'expand-right'
@@ -117,12 +130,12 @@ appGerProjAdmin.config(function ($resourceProvider, laddaProvider , $datepickerP
 });
 
 appGerProjAdmin.directive('ccSpinner', function () {
-	return {
-		'restrict': 'AE',
-		'templateUrl': 'templates/spinner.html',
-		'scope': {
-			'isLoading': '=',
-			'message': '@'
-		}
-	}
+    return {
+        'restrict': 'AE',
+        'templateUrl': 'templates/spinner.html',
+        'scope': {
+            'isLoading': '=',
+            'message': '@'
+        }
+    }
 });

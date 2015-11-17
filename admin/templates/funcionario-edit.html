@@ -12,47 +12,49 @@
             </div>
             <div class="panel-body">
                 <form role="form" novalidate="" ng-submit="save()" >
+                    <div class="row">                        
+                        <div class=" col-lg-6 form-group">
+                            <label>Nome</label>
+                            <input class="form-control" id="nome" name="nome" ng-model="funcionarios.selectedFuncionario.nome" />
+                            <p class="help-block">Nome do Funcionário.</p>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Status</label>
+                            <select name="status" 
+                                    id="status" 
+                                    class="form-control"
+                                    ng-model="funcionarios.selectedFuncionario.status"
+                                    >
+                                <option ng-repeat="status in funcionarios.listaStatus" value="{{status.id}}">{{status.name}}</option>
+                            </select>
+                            <p class="help-block">Define se o usuário pode acessar o sistema ou não.</p>
+                        </div>                        
+                    </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Nome</label>
-                                <input class="form-control" id="nome" name="nome" ng-model="funcionarios.selectedFuncionario.nome" />
-                                <p class="help-block">Nome do Funcionário.</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Usuário</label>
-                                <input class="form-control" id="login" name="login" ng-model="funcionarios.selectedFuncionario.login"/>
-                                <p class="help-block">Usuário que será utilizado para acessar o sistema.</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Senha</label>
-                                <input class="form-control" type="password" id="senha" name="senha" ng-model="funcionarios.selectedFuncionario.senha"/>
-                                <p class="help-block">Senha que será utilizado para acessar o sistema.</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Data Nascimento</label>
-                                <input class="form-control" type="text" id="data_nascimento" name="data_nascimento" ng-model="funcionarios.selectedFuncionario.data_nascimento" bs-datepicker/>
-                            </div>
-                            <div class="form-group">
-                                <label>Data Adminissão</label>
-                                <input class="form-control" type="text" id="data_admissao" name="data_admissao" ng-model="funcionarios.selectedFuncionario.data_admissao" bs-datepicker/>
-                            </div>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select name="status" 
-                                        id="status" 
-                                        class="form-control"
-                                        ng-model="funcionarios.selectedFuncionario.status"
-                                        >
-                                    <option ng-repeat="status in funcionarios.listaStatus" value="{{status.id}}">{{status.name}}</option>
-                                </select>
-                                <p class="help-block">Define se o usuário pode acessar o sistema ou não.</p>
-                            </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Usuário</label>
+                            <input class="form-control" id="login" name="login" ng-model="funcionarios.selectedFuncionario.login"/>
+                            <p class="help-block">Usuário que será utilizado para acessar o sistema.</p>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Senha</label>
+                            <input class="form-control" type="password" id="senha" name="senha" ng-model="funcionarios.selectedFuncionario.senha"/>
+                            <p class="help-block">Senha que será utilizado para acessar o sistema.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            <label>Data Nascimento</label>
+                            <input class="form-control" type="text" id="data_nascimento" name="data_nascimento" ng-model="funcionarios.selectedFuncionario.data_nascimento" bs-datepicker/>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <label>Data Adminissão</label>
+                            <input class="form-control" type="text" id="data_admissao" name="data_admissao" ng-model="funcionarios.selectedFuncionario.data_admissao" bs-datepicker/>
                         </div>
                     </div>
                     
                     <div class="row" ng-include="'templates/funcionario-form-relacionais.html'"></div>
-                    
+
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <button type="submit" class="btn btn-default btn-success">{{submit_action}}</button>
