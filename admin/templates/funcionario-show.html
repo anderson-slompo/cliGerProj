@@ -16,22 +16,107 @@
                         <div class="row">
                             <div class="col-lg-2 text-right">Nome:</div>
                             <div class="col-lg-4">{{funcionarios.selectedFuncionario.nome}}</div>
-                            
+
                             <div class="col-lg-2 text-right">Status:</div>
                             <div class="col-lg-4">{{funcionarios.selectedFuncionario.status ? "Ativo": "Inativo"}}</div>
                         </div>
                         <div class="row">
                             <div class="col-lg-2 text-right">Data Nascimento:</div>
                             <div class="col-lg-4">{{funcionarios.selectedFuncionario.data_nascimento|date:"dd/MM/yyyy"}}</div>
-                            
+
                             <div class="col-lg-2 text-right">Data Adminissao:</div>
                             <div class="col-lg-4">{{funcionarios.selectedFuncionario.data_admissao|date:"dd/MM/yyyy"}}</div>
                         </div>
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>
+
+                <div class="row">&nbsp;</div>
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        
+                        <div class="col-lg-6" ng-show="funcionarios.selectedFuncionario.contatos.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Contatos</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Número</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="contato in funcionarios.selectedFuncionario.contatos">
+                                        <td>{{contato.descricao}}</td>
+                                        <td>{{contato.contato}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="col-lg-6" ng-show="funcionarios.selectedFuncionario.enderecos.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Enderecos</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Endereço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="endereco in funcionarios.selectedFuncionario.enderecos">
+                                        <td>{{endereco.descricao}}</td>
+                                        <td>{{endereco.endereco}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6" ng-show="funcionarios.selectedFuncionario.projetos.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Projetos</caption>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="projeto in funcionarios.selectedFuncionario.projetos">
+                                        <td>{{projeto.id_projeto}}</td>
+                                        <td>{{projeto.nome}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="col-lg-6" ng-show="funcionarios.selectedFuncionario.departamentos.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Deparmanetos</caption>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="departamento in funcionarios.selectedFuncionario.departamentos">
+                                        <td>{{departamento.id_departamento}}</td>
+                                        <td>{{departamento.descricao}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+
+                </div>
+
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <button type="button" class="btn btn-default btn-success"><i class="fa fa-pencil"></i> Editar</button>

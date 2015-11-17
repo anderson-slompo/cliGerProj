@@ -1,18 +1,12 @@
-appGerProjAdmin.factory("Funcionario", function ($resource) {
-    return $resource(wsHost + "funcionarios/:id/", {id: '@id'}, {
-        update: {
-            method: 'PUT'
-        }
-    });
-});
+
 appGerProjAdmin.controller("FuncionarioCreateController", function ($scope, $state, FuncionarioService) {
 
     $scope.page_title = "Novo Funcionario";
     $scope.fun_codigo = 0;
     $scope.funcionarios = FuncionarioService;
     $scope.submit_action = "Salvar";
-    $scope.clientes.selectedFuncionario = {};
-    
+    $scope.funcionarios.selectedFuncionario = {};
+
     $scope.save = function () {
         $scope.funcionarios.createFuncionario($scope.funcionarios.selectedFuncionario)
                 .then(function () {
@@ -21,15 +15,78 @@ appGerProjAdmin.controller("FuncionarioCreateController", function ($scope, $sta
     };
 
 });
-appGerProjAdmin.controller("FuncionarioEditController", function ($scope, $stateParams, $state, FuncionarioService) {
+appGerProjAdmin.controller("FuncionarioEditController", function ($scope, $stateParams, $state, FuncionarioService, toaster) {
 
     $scope.page_title = "Alterar Funcionario";
     $scope.fun_codigo = $stateParams.id;
     $scope.funcionarios = FuncionarioService;
     $scope.submit_action = "Salvar Alterações";
+    $scope.novo_contato = {contato:'',tipo:''};
+    $scope.novo_endereco = {endereco:'',tipo:''};
+    $scope.tipos_contato = null;
+    $scope.tipos_endereco = null;
+        
+    FuncionarioService.getFuncionario($stateParams.id, function(data){
+        data.status = data.status ? 't' : 'f';
+        $scope.funcionarios.selectedFuncionario = data;
+    }, function(err){
+        toaster.pop({
+            type: 'error',
+            body: err.data.error            
+        });
+        $state.go("funcionario-list");
+    });
     
-    $scope.funcionarios.selectedFuncionario = FuncionarioService.getFuncionario($stateParams.id);
-
+    FuncionarioService.getTiposContato(function(data){
+        $scope.tipos_contato = {};
+        for (i in data.results){
+            $scope.tipos_contato[data.results[i].id] = data.results[i];
+        }
+    });
+    FuncionarioService.getTiposEndereco(function(data){
+        $scope.tipos_endereco = {};
+        for (i in data.results){
+            $scope.tipos_endereco[data.results[i].id] = data.results[i];
+        }
+    });
+    
+    $scope.removeContato = function(contato){
+        var index = $scope.funcionarios.selectedFuncionario.contatos.indexOf(contato);
+        $scope.funcionarios.selectedFuncionario.contatos.splice(index, 1);
+    }
+    
+    $scope.addContato = function(){
+        if($scope.novo_contato.contato != '' && $scope.novo_contato.tipo != ''){
+            var novo = {
+                id_tipo_contato: $scope.novo_contato.tipo,
+                id_funcionario : $scope.fun_codigo,
+                contato: $scope.novo_contato.contato,
+                descricao: $scope.tipos_contato[$scope.novo_contato.tipo].descricao
+            };
+            $scope.funcionarios.selectedFuncionario.contatos.push(novo);
+        } else{
+            alert('Preencha todos os campos para adicionar o contato');
+        }
+    }
+    $scope.removeEndereco = function(endereco){
+        var index = $scope.funcionarios.selectedFuncionario.enderecos.indexOf(endereco);
+        $scope.funcionarios.selectedFuncionario.enderecos.splice(index, 1);
+    }
+    
+    $scope.addEndereco = function(){
+        if($scope.novo_endereco.endereco != '' && $scope.novo_endereco.tipo != ''){
+            var novo = {
+                id_tipo_endereco: $scope.novo_endereco.tipo,
+                id_funcionario : $scope.fun_codigo,
+                endereco: $scope.novo_endereco.endereco,
+                descricao: $scope.tipos_endereco[$scope.novo_endereco.tipo].descricao
+            };
+            $scope.funcionarios.selectedFuncionario.enderecos.push(novo);
+        } else{
+            alert('Preencha todos os campos para adicionar o endereço');
+        }
+    }
+    
     $scope.save = function () {
         $scope.funcionarios.updateFuncionario($scope.funcionarios.selectedFuncionario).then(function () {
             $state.go("funcionario-list");
@@ -37,21 +94,29 @@ appGerProjAdmin.controller("FuncionarioEditController", function ($scope, $state
     };
 
 });
-appGerProjAdmin.controller("FuncionarioShowController", function ($scope, $stateParams, $state, FuncionarioService) {
+appGerProjAdmin.controller("FuncionarioShowController", function ($scope, $stateParams, $state, FuncionarioService, toaster) {
 
     $scope.fun_codigo = $stateParams.id;
-    $scope.page_title = "Detalhes do Funcionario #"+$scope.fun_codigo;
+    $scope.page_title = "Detalhes do Funcionario #" + $scope.fun_codigo;
     $scope.funcionarios = FuncionarioService;
-        
-    $scope.funcionarios.selectedFuncionario = FuncionarioService.getFuncionario($stateParams.id);
+    
+    FuncionarioService.getFuncionario($stateParams.id,function(data){
+        $scope.funcionarios.selectedFuncionario = data;
+    }, function(err){
+        toaster.pop({
+            type: 'error',
+            body: err.data.error            
+        });
+        $state.go("funcionario-list");
+    });
 
 });
 appGerProjAdmin.controller('FuncionarioListController', function ($scope, FuncionarioService) {
     $scope.page_title = "Relatório de Funcionários";
     $scope.funcionarios = FuncionarioService;
     $scope.funcionarios.search_status = $scope.funcionarios.listaStatus[0];
-    $scope.funcionarios.listaStatus[0].name='--Todos--';
-    
+    $scope.funcionarios.listaStatus[0].name = '--Todos--';
+
     $scope.loadMore = function () {
         $scope.funcionarios.loadMore();
     };
@@ -67,16 +132,22 @@ appGerProjAdmin.controller('FuncionarioListController', function ($scope, Funcio
     };
     $scope.funcionarios.doSearch();
 });
-appGerProjAdmin.service('FuncionarioService', function (Funcionario, $rootScope, $q, toaster) {
+appGerProjAdmin.service('FuncionarioService', function (Funcionario,  $rootScope, $q, toaster, TipoContato, TipoEndereco) {
     var self = {
-        getFuncionario: function (id) {
-            return Funcionario.get({id: id});
+        getFuncionario: function (id, fncOK, fncErr) {            
+            return Funcionario.get({id: id},fncOK,fncErr);
         },
         listaStatus: [
-            {id: null, name:'--Selecione--'},
+            {id: null, name: '--Selecione--'},
             {id: 't', name: "Ativo"},
             {id: 'f', name: "Inativo"}
         ],
+        getTiposContato: function(fncOk){
+            return TipoContato.get(fncOk);
+        },
+        getTiposEndereco: function(fncOk){
+            return TipoEndereco.get(fncOk);
+        },        
         page: 1,
         hasMore: true,
         isLoading: false,
@@ -102,9 +173,9 @@ appGerProjAdmin.service('FuncionarioService', function (Funcionario, $rootScope,
         loadFuncionarios: function () {
             if (self.hasMore && !self.isLoading) {
                 self.isLoading = true;
-                
+
                 statusSearch = self.search_status == null ? null : self.search_status.id;
-                
+
                 var params = {
                     page: self.page,
                     search_id: self.search_id,
@@ -114,7 +185,6 @@ appGerProjAdmin.service('FuncionarioService', function (Funcionario, $rootScope,
                 };
 
                 Funcionario.get(params, function (data) {
-                    console.log(data);
                     angular.forEach(data.results, function (fun) {
                         self.funcionarios.push(new Funcionario(fun));
                     });

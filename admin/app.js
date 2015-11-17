@@ -10,7 +10,8 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     'mgcrea.ngStrap',
     'toaster',
     'ngAnimate',
-    'ui.router'
+    'ui.router',
+    'ui.utils.masks'
 ]);
 
 var wsHost = "http://localhost.wsGerProj/admin/";
@@ -102,15 +103,17 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
-appGerProjAdmin.config(function ($resourceProvider, laddaProvider /*, $datepickerProvider */) {
+appGerProjAdmin.config(function ($resourceProvider, laddaProvider , $datepickerProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = true;
     laddaProvider.setOption({
         style: 'expand-right'
     });
-//    angular.extend($datepickerProvider.defaults, {
-//        dateFormat: 'd/M/yyyy',
-//        autoclose: true
-//    });
+    angular.extend($datepickerProvider.defaults, {
+        dateFormat: 'dd/MM/yyyy',
+        modelDateFormat: 'yyyy-MM-dd',
+        timezone: 'UTC',
+        autoclose: true
+    });
 });
 
 appGerProjAdmin.directive('ccSpinner', function () {

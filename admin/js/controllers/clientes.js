@@ -1,10 +1,4 @@
-appGerProjAdmin.factory("Cliente", function ($resource) {
-    return $resource(wsHost + "clientes/:id/", {id: '@id'}, {
-        update: {
-            method: 'PUT'
-        }
-    });
-});
+
 appGerProjAdmin.controller("ClienteCreateController", function ($scope, $state, ClienteService) {
 
     $scope.page_title = "Novo Cliente";
