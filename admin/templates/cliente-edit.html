@@ -16,18 +16,19 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Nome</label>
-                                <input class="form-control" id="nome" name="nome" ng-model="clientes.selectedCliente.nome" />
+                                <input class="form-control" id="nome" name="nome" ng-model="clientes.selectedCliente.nome" required="" ng-minlength="3"/>
                                 <p class="help-block">Nome do Cliente.</p>
                             </div>
                             <div class="form-group">
                                 <label>ID Externo</label>
-                                <input class="form-control" id="id_externo" name="id_externo" ng-model="clientes.selectedCliente.id_externo"/>
+                                <input class="form-control" id="id_externo" name="id_externo" ng-model="clientes.selectedCliente.id_externo" required="" type="number"/>
                                 <p class="help-block">ID do Cliente no sistema de CRM.</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
+                            <button type="button" class="btn btn-default btn-danger" ui-sref="cliente-list">Cancelar</button>
                             <button type="submit" class="btn btn-default btn-success">{{submit_action}}</button>
                         </div>
                     </div>

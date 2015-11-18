@@ -12,6 +12,24 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     'ngAnimate',
     'ui.router',
     'ui.utils.masks'
+]).run([
+    'defaultErrorMessageResolver',
+    function (defaultErrorMessageResolver) {
+        defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
+            errorMessages["defaultMsg"] = "Por favor adicione mensagem de erro para {0}";
+            errorMessages["email"] = "Por favor digite um endereço de email válido";
+            errorMessages["minlength"] = "Por favor digite pelo menos {0} caracteres";
+            errorMessages["maxlength"] = "Você digitou mais do que o máximo de {0} caracteres";
+            errorMessages["min"] = "Por favor digite o número maior que {0}";
+            errorMessages["max"] = "Por favor digite o número menor que {0}";
+            errorMessages["required"] = "Este campo é obrigatório";
+            errorMessages["date"] = "Por favor digite uma data válida";
+            errorMessages["pattern"] = "Por favor certifique-se que a informação digitada segue o padrão {0}";
+            errorMessages["number"] = "Por favor digite um número válido";
+            errorMessages["url"] = "Por favor digite uma URL válida no formato http(s)://www.google.com";
+            errorMessages["brPhoneNumber"] = "Favor informar um telefone válido";
+        });
+    }
 ]);
 
 var wsHost = "http://localhost.wsGerProj/admin/";
@@ -125,7 +143,8 @@ appGerProjAdmin.config(function ($resourceProvider, laddaProvider, $datepickerPr
         dateFormat: 'dd/MM/yyyy',
         modelDateFormat: 'yyyy-MM-dd',
         timezone: 'UTC',
-        autoclose: true
+        autoclose: true,
+        trigger: 'click'
     });
 });
 

@@ -119,8 +119,9 @@
 
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <button type="button" class="btn btn-default btn-success"><i class="fa fa-pencil"></i> Editar</button>
-                        <button type="button" class="btn btn-default btn-danger"><i class="fa fa-trash-o"></i> Remover</button>
+                        <button type="button" class="btn btn-default btn-warning" ui-sref="funcionario-edit({id: fun_codigo})"><i class="fa fa-pencil"></i> Editar</button>
+                        <button type="button" class="btn btn-default btn-danger" ng-click="toggle(funcionarios.selectedFuncionario)" ng-show="funcionarios.selectedFuncionario.status"><i class="fa fa-toggle-off"></i> Inativar</button>
+                        <button type="button" class="btn btn-default btn-success" ng-click="toggle(funcionarios.selectedFuncionario)" ng-show="!funcionarios.selectedFuncionario.status"><i class="fa fa-toggle-on"></i> Ativar</button>
                     </div>
                 </div>
             </div>

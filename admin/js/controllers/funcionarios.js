@@ -2,7 +2,15 @@
 appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $stateParams, $state, FuncionarioService, toaster) {
 
     $scope.funcionarios = FuncionarioService;
-    
+    $scope.novo_contato = {contato: '', tipo: ''};
+    $scope.novo_endereco = {endereco: '', tipo: ''};
+    $scope.tipos_contato = null;
+    $scope.tipos_endereco = null;
+    $scope.projetos = null;
+    $scope.departamentos = null;
+    $scope.comboProjeto = {disponiveis: [], associados: []};
+    $scope.comboDepartamento = {disponiveis: [], associados: []};
+
     $scope.loadTipos = function () {
         FuncionarioService.getTiposContato(function (data) {
             $scope.tipos_contato = {};
@@ -44,7 +52,7 @@ appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $state
             $scope.departamentos = temp_departamentos;
         });
     }
-    
+
     if ($state.$current.name == 'funcionario-create') {
         $scope.page_title = "Novo Funcionario";
         $scope.fun_codigo = 0;
@@ -96,15 +104,6 @@ appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $state
         };
     }
 
-    $scope.novo_contato = {contato: '', tipo: ''};
-    $scope.novo_endereco = {endereco: '', tipo: ''};
-    $scope.tipos_contato = null;
-    $scope.tipos_endereco = null;
-    $scope.projetos = null;
-    $scope.departamentos = null;
-    $scope.comboProjeto = {disponiveis: [], associados: []};
-    $scope.comboDepartamento = {disponiveis: [], associados: []};
-
     $scope.removeContato = function (contato) {
         var index = $scope.funcionarios.selectedFuncionario.contatos.indexOf(contato);
         $scope.funcionarios.selectedFuncionario.contatos.splice(index, 1);
@@ -119,6 +118,8 @@ appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $state
                 descricao: $scope.tipos_contato[$scope.novo_contato.tipo].descricao
             };
             $scope.funcionarios.selectedFuncionario.contatos.push(novo);
+            $scope.novo_contato.contato = '';
+            $scope.novo_contato.tipo = '';
         } else {
             alert('Preencha todos os campos para adicionar o contato');
         }
@@ -137,6 +138,8 @@ appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $state
                 descricao: $scope.tipos_endereco[$scope.novo_endereco.tipo].descricao
             };
             $scope.funcionarios.selectedFuncionario.enderecos.push(novo);
+            $scope.novo_endereco.endereco = '';
+            $scope.novo_endereco.tipo = '';
         } else {
             alert('Preencha todos os campos para adicionar o endereço');
         }
@@ -204,8 +207,16 @@ appGerProjAdmin.controller("FuncionarioShowController", function ($scope, $state
         $state.go("funcionario-list");
     });
 
+    $scope.toggle = function (fun) {
+        var msg = fun.status ? 'inativar' : 'ativar';
+        if (confirm("Deseja mesmo " + msg + " o funcionário #" + fun.id + " " + fun.nome + "?")) {
+            $scope.funcionarios.toggleFuncionario(fun).then(function () {
+                $state.go("funcionario-list");
+            });
+        }
+    };
 });
-appGerProjAdmin.controller('FuncionarioListController', function ($scope, FuncionarioService) {
+appGerProjAdmin.controller('FuncionarioListController', function ($scope, $state, FuncionarioService) {
     $scope.page_title = "Relatório de Funcionários";
     $scope.funcionarios = FuncionarioService;
     $scope.funcionarios.search_status = $scope.funcionarios.listaStatus[0];
@@ -217,10 +228,11 @@ appGerProjAdmin.controller('FuncionarioListController', function ($scope, Funcio
     $scope.doSearch = function () {
         $scope.funcionarios.doSearch();
     };
-    $scope.remove = function (fun) {
-        if (confirm("Deseja mesmo remover o funcionário #" + fun.id + " " + fun.nome + "?")) {
-            $scope.funcionarios.removeFuncionario(fun).then(function () {
-                $state.go("funcionario-list");
+    $scope.toggle = function (fun) {
+        var msg = fun.status ? 'inativar' : 'ativar';
+        if (confirm("Deseja mesmo " + msg + " o funcionário #" + fun.id + " " + fun.nome + "?")) {
+            $scope.funcionarios.toggleFuncionario(fun).then(function () {
+                $state.go("funcionario-list", {}, {reload:true});
             });
         }
     };
@@ -319,15 +331,13 @@ appGerProjAdmin.service('FuncionarioService', function (Funcionario, $rootScope,
             });
             return d.promise;
         },
-        removeFuncionario: function (fun) {
+        toggleFuncionario: function (fun) {
             var d = $q.defer();
             self.isDeleting = true;
-            fun.$remove().then(function () {
+            fun.$remove().then(function (data) {
                 self.isDeleting = false;
-                var index = self.funcionarios.indexOf(fun);
-                self.funcionarios.splice(index, 1);
                 self.selectedFuncionario = null;
-                toaster.pop('success', 'Funcionário removido com sucesso');
+                toaster.pop('success', data.message);
                 d.resolve();
             }, function (error) {
                 toaster.pop({

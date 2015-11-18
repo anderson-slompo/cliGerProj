@@ -67,7 +67,8 @@
                                 <td class="text-center">
                                     <a ui-sref="funcionario-show({id: fun.id})" class="fa fa-search" title="Visualizar funcionario #{{fun.id}}"></a>&nbsp;
                                     <a ui-sref="funcionario-edit({id: fun.id})" class="fa fa-pencil" title="Editar funcionario #{{fun.id}}"></a>&nbsp;
-                                    <a class="fa fa-trash-o" title="Remover funcionário #{{fun.id}}" ng-click="remove(fun)" href="javascript:void(0)"></a>
+                                    <a class="fa fa-toggle-off" title="Inativar funcionário #{{fun.id}}" ng-click="toggle(fun)" href="javascript:void(0)" ng-show="fun.status"></a>
+                                    <a class="fa fa-toggle-on" title="Ativar funcionário #{{fun.id}}" ng-click="toggle(fun)" href="javascript:void(0)" ng-show="!fun.status"></a>
                                 </td>
                             </tr>
                         </tbody>
