@@ -99,7 +99,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'main': {
                         templateUrl: 'templates/funcionario-edit.html',
-                        controller: 'FuncionarioEditController'
+                        controller: 'FuncionarioCrudController'
                     }
                 }
             })
@@ -108,7 +108,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                 views: {
                     'main': {
                         templateUrl: 'templates/funcionario-edit.html',
-                        controller: 'FuncionarioCreateController'
+                        controller: 'FuncionarioCrudController'
                     }
                 }
             });
