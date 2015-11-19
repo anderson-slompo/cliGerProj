@@ -129,6 +129,42 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'FuncionarioCrudController'
                     }
                 }
+            })
+            .state('projeto-list', {
+                url: "/projeto/list",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/projeto-list.html',
+                        controller: 'ProjetoListController'
+                    }
+                }
+            })
+            .state('projeto-show', {
+                url: "/projeto/show/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/projeto-show.html',
+                        controller: 'ProjetoShowController'
+                    }
+                }
+            })
+            .state('projeto-edit', {
+                url: "/projeto/edit/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/projeto-form.html',
+                        controller: 'ProjetoCrudController'
+                    }
+                }
+            })
+            .state('projeto-create', {
+                url: "/projeto/create",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/projeto-form.html',
+                        controller: 'ProjetoCrudController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");

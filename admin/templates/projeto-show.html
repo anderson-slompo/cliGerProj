@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"> {{page_title}} </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Projeto #{{fun_codigo}}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Nome:</div>
+                            <div class="col-lg-4">{{service.selectedProjeto.nome}}</div>
+
+                            <div class="col-lg-2 text-right">Descrição:</div>
+                            <div class="col-lg-4">{{service.selectedProjeto.descricao}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">&nbsp;</div>
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="col-lg-6" ng-show="fservice.selectedProjeto.funcionarios.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Funcionarios</caption>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="funcionario in service.selectedProjeto.funcionarios">
+                                        <td>{{funcionario.id}}</td>
+                                        <td>{{funcionario.nome}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-6" ng-show="service.selectedProjeto.clientes.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Clientes</caption>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="cliente in service.selectedProjeto.clientes">
+                                        <td>{{cliente.id}}</td>
+                                        <td>{{cliente.nome}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" ng-show="service.selectedProjeto.anexos.lenght > 0">
+                        <table class="table table-striped table-hover">
+                            <caption>Anexos</caption>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="anexos in service.selectedProjeto.anexos">
+                                    <td>{{anexo.id}}</td>
+                                    <td>{{anexo.nome}}</td>
+                                    <td>{{anexo.descricao}}</td>
+                                    <td>{{anexo.caminho}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="button" class="btn btn-default btn-warning" ui-sref="projeto-edit({id: pro_codigo})"><i class="fa fa-pencil"></i> Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

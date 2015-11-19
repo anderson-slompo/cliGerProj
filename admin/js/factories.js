@@ -31,3 +31,6 @@ appGerProjAdmin.factory("TipoEndereco", function ($resource) {
 appGerProjAdmin.factory("Departamento", function ($resource) {
     return $resource(wsHost + "departamentos/:id/", {id: '@id'});
 });
+appGerProjAdmin.factory("Anexo", function ($resource) {
+    return $resource(wsHost + "anexos/:id/", {id: '@id'});
+});
