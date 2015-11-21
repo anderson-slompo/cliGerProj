@@ -1,14 +1,17 @@
 
-appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $stateParams, $state, ProjetoService, Funcionario, Cliente, toaster) {
+appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $stateParams, $state, ProjetoService, ProjetoAnexosService, Funcionario, Cliente, AnexosProjeto, toaster) {
 
     $scope.service = ProjetoService;
+    $scope.serviceAnexos = ProjetoAnexosService;
     $scope.funcionarios = null;
     $scope.clientes = null;
     $scope.comboFuncionario = {disponiveis: [], associados: []};
     $scope.comboCliente = {disponiveis: [], associados: []};
-    
-    $scope.loadFuncionarios = function(){
-        Funcionario.get({skip_page:true},function (data) {
+
+    $scope.serviceAnexos.zerar();
+
+    $scope.loadFuncionarios = function () {
+        Funcionario.get({skip_page: true}, function (data) {
             var temp_funcionarios = data.results;
             for (var i in $scope.service.selectedProjeto.funcionarios) {
                 var busca = $scope.service.selectedProjeto.funcionarios[i];
@@ -20,8 +23,8 @@ appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $statePara
             $scope.funcionarios = temp_funcionarios;
         });
     };
-    $scope.loadClientes = function(){
-        Cliente.get({skip_page:true},function (data) {
+    $scope.loadClientes = function () {
+        Cliente.get({skip_page: true}, function (data) {
             var temp_clientes = data.results;
             for (var i in $scope.service.selectedProjeto.clientes) {
                 var busca = $scope.service.selectedProjeto.clientes[i];
@@ -46,26 +49,29 @@ appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $statePara
             funcionarios: [],
             anexos: []
         };
-        
+
         $scope.loadClientes();
         $scope.loadFuncionarios();
-        
+
         $scope.save = function () {
-            $scope.service.createProjeto($scope.service.selectedProjeto)
-                    .then(function () {
+            $scope.service.createProjeto($scope.service.selectedProjeto).then(function (projeto_id) {
+                $scope.serviceAnexos.saveAnexos(projeto_id).then(function () {
+                    $scope.serviceAnexos.deleteAnexos(projeto_id).then(function () {
                         $state.go("projeto-list");
                     });
+                });
+            });
         };
 
     } else {
         $scope.page_title = "Alterar Projeto";
         $scope.pro_codigo = $stateParams.id;
         $scope.submit_action = "Salvar Alterações";
-        
+
         ProjetoService.getProjeto($stateParams.id, function (data) {
             data.status = data.status ? 't' : 'f';
             $scope.service.selectedProjeto = data;
-            
+
             $scope.loadClientes();
             $scope.loadFuncionarios();
 
@@ -76,16 +82,20 @@ appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $statePara
             });
             $state.go("projeto-list");
         });
-        
+
         $scope.save = function () {
             $scope.service.updateProjeto($scope.service.selectedProjeto).then(function () {
-                $state.go("projeto-list");
+                $scope.serviceAnexos.saveAnexos($scope.pro_codigo).then(function () {
+                    $scope.serviceAnexos.deleteAnexos($scope.pro_codigo).then(function () {
+                        $state.go("projeto-list");
+                    });
+                });
             });
         };
     }
-    
+
     $scope.addCliente = function () {
-        
+
         var temp = $scope.comboCliente.disponiveis;
         $scope.comboCliente.disponiveis = [];
         angular.forEach(temp, function (value, key) {
@@ -107,7 +117,7 @@ appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $statePara
             $scope.service.selectedProjeto.clientes.splice(index, 1);
         });
     };
-    
+
     $scope.addFuncionario = function () {
         var temp = $scope.comboFuncionario.disponiveis;
         $scope.comboFuncionario.disponiveis = [];
@@ -137,6 +147,9 @@ appGerProjAdmin.controller("ProjetoShowController", function ($scope, $statePara
     $scope.pro_codigo = $stateParams.id;
     $scope.page_title = "Detalhes do Projeto #" + $scope.pro_codigo;
     $scope.service = ProjetoService;
+    $scope.dowloadlink = function(id){
+        document.location.href = downHost+id;
+    };
 
     ProjetoService.getProjeto($stateParams.id, function (data) {
         $scope.service.selectedProjeto = data;
@@ -161,7 +174,91 @@ appGerProjAdmin.controller('ProjetoListController', function ($scope, $state, Pr
     };
     $scope.service.doSearch();
 });
-appGerProjAdmin.service('ProjetoService', function (Projeto, Funcionario, Cliente, Anexo, $rootScope, $q, toaster) {
+
+appGerProjAdmin.service('ProjetoAnexosService', function ($q, toaster, AnexosProjeto) {
+    var self = {
+        novo_anexo: {nome: '', descricao: '', original: null},
+        add_anexos: [],
+        rm_anexos: [],
+        zerar: function () {
+            self.add_anexos = [];
+            self.rm_anexos = [];
+            self.novo_anexo = {nome: '', descricao: '', original: null};
+        },
+        addAnexo: function () {
+            if (self.novo_anexo.nome !== '' &&
+                    self.novo_anexo.descricao !== '' &&
+                    self.novo_anexo.original !== null) {
+
+                var novo = {
+                    nome: self.novo_anexo.nome,
+                    descricao: self.novo_anexo.descricao,
+                    original: self.novo_anexo.original
+                };
+
+                self.add_anexos.push(novo);
+
+                self.novo_anexo.original = null;
+                self.novo_anexo.nome = '';
+                self.novo_anexo.descricao = '';
+            } else {
+                alert('Favor preencher todos os campos para adicionar o anexo!');
+            }
+        },
+        removeAnexoAntigo: function (anexo, listaAnexos) {
+            var index = listaAnexos.map(function (e) {
+                return e.id;
+            }).indexOf(anexo.id);
+            listaAnexos.splice(index, 1);
+            self.rm_anexos.push(anexo.id);
+        },
+        removeAnexoAdicionado: function (anexo) {
+            var index = self.add_anexos.map(function (e) {
+                return e.id;
+            }).indexOf(anexo.id);
+            self.add_anexos.splice(index, 1);
+        },
+        saveAnexos: function (projeto_id) {
+            var d = $q.defer();
+            if (self.add_anexos.length > 0) {
+                AnexosProjeto.addFiles(projeto_id, self.add_anexos, function (data) {
+                    toaster.pop('success', data.message);
+                    d.resolve();
+                }, function (error, status) {
+                    toaster.pop({
+                        type: 'error',
+                        body: '[' + status + '] Erro ao adicionar anexos ao projeto:<br/>' + error.error.nl2br(),
+                        bodyOutputType: 'trustedHtml'
+                    });
+                });
+            } else {
+                d.resolve();
+            }
+            return d.promise;
+        },
+        deleteAnexos: function (projeto_id) {
+            var d = $q.defer();
+            if (self.rm_anexos.length > 0) {
+                AnexosProjeto.deleteFiles(projeto_id, self.rm_anexos, function (data) {
+                    toaster.pop('success', data.message);
+                    d.resolve();
+                }, function (error, status) {
+                    toaster.pop({
+                        type: 'error',
+                        body: '[' + status + '] Erro ao remover anexos ao projeto:<br/>' + error.data.error.nl2br(),
+                        bodyOutputType: 'trustedHtml'
+                    });
+                });
+            } else {
+                d.resolve();
+            }
+            return d.promise;
+        }
+    };
+    return self;
+});
+
+appGerProjAdmin.service('ProjetoService', function (Projeto, Funcionario, Cliente, Anexo, $q, toaster) {
     var self = {
         getProjeto: function (id, fncOK, fncErr) {
             return Projeto.get({id: id}, fncOK, fncErr);
@@ -253,8 +350,8 @@ appGerProjAdmin.service('ProjetoService', function (Projeto, Funcionario, Client
                 self.hasMore = true;
                 self.page = 1;
                 self.projetos = [];
-                toaster.pop('success', data.message);
-                d.resolve();
+                toaster.pop('success', data.message.message);
+                d.resolve(data.message.id);
             }, function (error) {
                 toaster.pop({
                     type: 'error',

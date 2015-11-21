@@ -11,7 +11,8 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     'toaster',
     'ngAnimate',
     'ui.router',
-    'ui.utils.masks'
+    'ui.utils.masks',
+    'file-model'
 ]).run([
     'defaultErrorMessageResolver',
     function (defaultErrorMessageResolver) {
@@ -33,6 +34,7 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
 ]);
 
 var wsHost = "http://localhost.wsGerProj/admin/";
+var downHost = "http://localhost.wsGerProj/download/";
 
 appGerProjAdmin.directive('preventEnter', function () {
     return {
