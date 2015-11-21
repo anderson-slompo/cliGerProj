@@ -1,0 +1,39 @@
+
+<div class="col-lg-4 col-lg-offset-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">Funcionários Disponíveis</div>
+        <div class="panel-body form-group">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control"
+                ng-multiple="true"
+                ng-model="comboFuncionario.disponiveis"
+                ng-options="funcionario.nome for funcionario in funcionarios track by funcionario.id">
+            </select>
+            <p class="help-block text-center">Selecione os funcionários desejados e clique no botão <span class="glyphicon glyphicon-backward"></span> para associá-los.</p>
+        </div>
+    </div>
+</div>
+<div class="col-lg-1 text-center" style="padding-top: 9%">
+    <div class="btn-group-vertical" role="group">
+        <button type="button" title="Atribuir funcionários" class="btn btn-info btn-sm glyphicon glyphicon-forward" ng-click="addFuncionario()"></button>    
+        <button type="button" title="Desatribuir funcionários" class="btn btn-info btn-sm glyphicon glyphicon-backward" ng-click="rmFuncionario()"></button>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Funcionários Atribuídos</div>
+        <div class="panel-body form-group">
+            <select 
+                multiple="" 
+                size="10" 
+                class="form-control"
+                ng-multiple="true"
+                ng-model="comboFuncionario.associados"
+                ng-options="funcionario.nome for funcionario in service.selectedProjeto.funcionarios track by funcionario.id">
+            </select>
+            <p class="help-block text-center">Selecione os funcionários desejados e clique no botão <span class="glyphicon glyphicon-backward"></span> para desassociá-los.</p>
+        </div>
+    </div>
+</div>

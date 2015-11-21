@@ -249,16 +249,16 @@ appGerProjAdmin.service('FuncionarioService', function (Funcionario, $rootScope,
             {id: 'f', name: "Inativo"}
         ],
         getTiposContato: function (fncOk) {
-            return TipoContato.get(fncOk);
+            return TipoContato.get({skip_page:true},fncOk);
         },
         getTiposEndereco: function (fncOk) {
-            return TipoEndereco.get(fncOk);
+            return TipoEndereco.get({skip_page:true},fncOk);
         },
         getProjetos: function (fncOk) {
-            return Projeto.get(fncOk);
+            return Projeto.get({skip_page:true},fncOk);
         },
         getDepartamentos: function (fncOk) {
-            return Departamento.get(fncOk);
+            return Departamento.get({skip_page:true},fncOk);
         },
         page: 1,
         hasMore: true,

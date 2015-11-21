@@ -1,12 +1,141 @@
 
-appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $stateParams, $state, ProjetoService, toaster) {
+appGerProjAdmin.controller("ProjetoCrudController", function ($scope, $stateParams, $state, ProjetoService, Funcionario, Cliente, toaster) {
 
+    $scope.service = ProjetoService;
+    $scope.funcionarios = null;
+    $scope.clientes = null;
+    $scope.comboFuncionario = {disponiveis: [], associados: []};
+    $scope.comboCliente = {disponiveis: [], associados: []};
     
+    $scope.loadFuncionarios = function(){
+        Funcionario.get({skip_page:true},function (data) {
+            var temp_funcionarios = data.results;
+            for (var i in $scope.service.selectedProjeto.funcionarios) {
+                var busca = $scope.service.selectedProjeto.funcionarios[i];
+                var index = temp_funcionarios.map(function (e) {
+                    return e.id;
+                }).indexOf(busca.id);
+                temp_funcionarios.splice(index, 1);
+            }
+            $scope.funcionarios = temp_funcionarios;
+        });
+    };
+    $scope.loadClientes = function(){
+        Cliente.get({skip_page:true},function (data) {
+            var temp_clientes = data.results;
+            for (var i in $scope.service.selectedProjeto.clientes) {
+                var busca = $scope.service.selectedProjeto.clientes[i];
+                var index = temp_clientes.map(function (e) {
+                    return e.id;
+                }).indexOf(busca.id);
+                temp_clientes.splice(index, 1);
+            }
+            $scope.clientes = temp_clientes;
+        });
+    };
+
+    if ($state.$current.name == 'projeto-create') {
+        $scope.page_title = "Novo Projeto";
+        $scope.pro_codigo = 0;
+        $scope.submit_action = "Salvar";
+
+        $scope.service.selectedProjeto = {
+            nome: null,
+            descricao: null,
+            clientes: [],
+            funcionarios: [],
+            anexos: []
+        };
+        
+        $scope.loadClientes();
+        $scope.loadFuncionarios();
+        
+        $scope.save = function () {
+            $scope.service.createProjeto($scope.service.selectedProjeto)
+                    .then(function () {
+                        $state.go("projeto-list");
+                    });
+        };
+
+    } else {
+        $scope.page_title = "Alterar Projeto";
+        $scope.pro_codigo = $stateParams.id;
+        $scope.submit_action = "Salvar Alterações";
+        
+        ProjetoService.getProjeto($stateParams.id, function (data) {
+            data.status = data.status ? 't' : 'f';
+            $scope.service.selectedProjeto = data;
+            
+            $scope.loadClientes();
+            $scope.loadFuncionarios();
+
+        }, function (err) {
+            toaster.pop({
+                type: 'error',
+                body: err.data.error
+            });
+            $state.go("projeto-list");
+        });
+        
+        $scope.save = function () {
+            $scope.service.updateProjeto($scope.service.selectedProjeto).then(function () {
+                $state.go("projeto-list");
+            });
+        };
+    }
+    
+    $scope.addCliente = function () {
+        
+        var temp = $scope.comboCliente.disponiveis;
+        $scope.comboCliente.disponiveis = [];
+        angular.forEach(temp, function (value, key) {
+            $scope.service.selectedProjeto.clientes.push(value);
+            var index = $scope.clientes.map(function (e) {
+                return e.id;
+            }).indexOf(value.id);
+            $scope.clientes.splice(index, 1);
+        });
+    };
+    $scope.rmCliente = function () {
+        var temp = $scope.comboCliente.associados;
+        $scope.comboCliente.associados = [];
+        angular.forEach(temp, function (value, key) {
+            $scope.clientes.push(value);
+            var index = $scope.service.selectedProjeto.clientes.map(function (e) {
+                return e.id;
+            }).indexOf(value.id);
+            $scope.service.selectedProjeto.clientes.splice(index, 1);
+        });
+    };
+    
+    $scope.addFuncionario = function () {
+        var temp = $scope.comboFuncionario.disponiveis;
+        $scope.comboFuncionario.disponiveis = [];
+        angular.forEach(temp, function (value, key) {
+            $scope.service.selectedProjeto.funcionarios.push(value);
+            var index = $scope.funcionarios.map(function (e) {
+                return e.id;
+            }).indexOf(value.id);
+            $scope.funcionarios.splice(index, 1);
+        });
+    };
+    $scope.rmFuncionario = function () {
+        var temp = $scope.comboFuncionario.associados;
+        $scope.comboFuncionario.associados = [];
+        angular.forEach(temp, function (value, key) {
+            $scope.funcionarios.push(value);
+            var index = $scope.service.selectedProjeto.funcionarios.map(function (e) {
+                return e.id;
+            }).indexOf(value.id);
+            $scope.service.selectedProjeto.funcionarios.splice(index, 1);
+        });
+    };
+
 });
 appGerProjAdmin.controller("ProjetoShowController", function ($scope, $stateParams, $state, ProjetoService, toaster) {
 
     $scope.pro_codigo = $stateParams.id;
-    $scope.page_title = "Detalhes do Projeto #" + $scope.fun_codigo;
+    $scope.page_title = "Detalhes do Projeto #" + $scope.pro_codigo;
     $scope.service = ProjetoService;
 
     ProjetoService.getProjeto($stateParams.id, function (data) {
@@ -23,7 +152,7 @@ appGerProjAdmin.controller("ProjetoShowController", function ($scope, $statePara
 appGerProjAdmin.controller('ProjetoListController', function ($scope, $state, ProjetoService) {
     $scope.page_title = "Relatório de Projetos";
     $scope.service = ProjetoService;
-    
+
     $scope.loadMore = function () {
         $scope.service.loadMore();
     };
