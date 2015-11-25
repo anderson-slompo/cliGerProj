@@ -198,9 +198,10 @@ appGerProjAdmin.service('ProjetoAnexosService', function ($q, toaster, AnexosPro
 
                 self.add_anexos.push(novo);
 
-                self.novo_anexo.original = null;
                 self.novo_anexo.nome = '';
                 self.novo_anexo.descricao = '';
+                self.novo_anexo.original = null;
+                document.getElementById('novo_anexo_file').value=null;
             } else {
                 alert('Favor preencher todos os campos para adicionar o anexo!');
             }
@@ -214,8 +215,8 @@ appGerProjAdmin.service('ProjetoAnexosService', function ($q, toaster, AnexosPro
         },
         removeAnexoAdicionado: function (anexo) {
             var index = self.add_anexos.map(function (e) {
-                return e.id;
-            }).indexOf(anexo.id);
+                return e.original;
+            }).indexOf(anexo.original);
             self.add_anexos.splice(index, 1);
         },
         saveAnexos: function (projeto_id) {

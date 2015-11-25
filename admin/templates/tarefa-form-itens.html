@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Itens</div>
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>% da tarefa</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in service.selectedTarefa.itens">
+                        <td>{{item.titulo}}</td>
+                        <td>{{item.descricao}}</td>
+                        <td>{{item.porcentagem}}</td>
+                        <td>
+                            <a class="fa fa-trash-o" title="Remover Item {{item.titulo}}" ng-click="serviceItens.removeItemAntigo(item,service.selectedTarefa.itens)" href="javascript:void(0)"></a>&nbsp;
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in serviceItens.add_itens">
+                        <td>{{item.titulo}}</td>
+                        <td>{{item.descricao}}</td>
+                        <td>{{item.porcentagem}}</td>
+                        <td>
+                            <a class="fa fa-trash-o" title="Remover item {{item.titulo}}" ng-click="serviceItens.removeItemAdicionado(item)" href="javascript:void(0)"></a>&nbsp;
+                        </td>
+                    </tr>
+                    <tr ng-show="service.selectedTarefa.itens.length == 0 && serviceItens.add_itens.length == 0">
+                        <td colspan="3" class="text-center">Nenhum item adicionado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" class="form-control" ng-model="serviceItens.novo_item.titulo"/>
+            </div>
+            <div class="form-group">
+                <label>Descrição</label>
+                <input type="text" class="form-control" ng-model="serviceItens.novo_item.descricao"/>
+            </div>
+            <div class="form-group">
+                <label>% da tarefa</label>
+                <input type="text" class="form-control" ng-model="serviceItens.novo_item.porcentagem"/>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-default btn-info btn-sm glyphicon glyphicon-plus" ng-click="serviceItens.addItem()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>

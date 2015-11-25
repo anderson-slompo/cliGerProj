@@ -167,6 +167,42 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'ProjetoCrudController'
                     }
                 }
+            })
+            .state('tarefa-list', {
+                url: "/tarefa/list",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-list.html',
+                        controller: 'TarefaListController'
+                    }
+                }
+            })
+            .state('tarefa-show', {
+                url: "/tarefa/show/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-show.html',
+                        controller: 'TarefaShowController'
+                    }
+                }
+            })
+            .state('tarefa-edit', {
+                url: "/tarefa/edit/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-form.html',
+                        controller: 'TarefaCrudController'
+                    }
+                }
+            })
+            .state('tarefa-create', {
+                url: "/tarefa/create",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-form.html',
+                        controller: 'TarefaCrudController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");

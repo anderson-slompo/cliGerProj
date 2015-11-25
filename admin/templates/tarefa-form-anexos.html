@@ -12,12 +12,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="anexo in service.selectedProjeto.anexos">
+                    <tr ng-repeat="anexo in service.selectedTarefa.anexos">
                         <td>{{anexo.original}}</td>
                         <td>{{anexo.nome}}</td>
                         <td>{{anexo.descricao}}</td>
                         <td>
-                            <a class="fa fa-trash-o" title="Remover anexo {{anexo.nome}}" ng-click="serviceAnexos.removeAnexoAntigo(anexo,service.selectedProjeto.anexos)" href="javascript:void(0)"></a>&nbsp;
+                            <a class="fa fa-trash-o" title="Remover anexo {{anexo.nome}}" ng-click="serviceAnexos.removeAnexoAntigo(anexo,service.selectedTarefa.anexos)" href="javascript:void(0)"></a>&nbsp;
                         </td>
                     </tr>
                     <tr ng-repeat="anexo in serviceAnexos.add_anexos">
@@ -28,7 +28,7 @@
                             <a class="fa fa-trash-o" title="Remover anexo {{anexo.nome}}" ng-click="serviceAnexos.removeAnexoAdicionado(anexo)" href="javascript:void(0)"></a>&nbsp;
                         </td>
                     </tr>
-                    <tr ng-show="service.selectedProjeto.anexos.length == 0 && serviceAnexos.add_anexos.length == 0">
+                    <tr ng-show="service.selectedTarefa.anexos.length == 0 && serviceAnexos.add_anexos.length == 0">
                         <td colspan="3" class="text-center">Nenhum anexo adicionado</td>
                     </tr>
                 </tbody>
