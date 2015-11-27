@@ -1,5 +1,5 @@
 
-appGerProjAdmin.controller("TarefaCrudController", function ($scope, $stateParams, $state, TarefaService, TarefaAnexosService, TarefaItensService, toaster) {
+appGerProjAdmin.controller("TarefaCrudController", function ($q, $scope, $stateParams, $state, TarefaService, TarefaAnexosService, TarefaItensService, toaster) {
 
     $scope.service = TarefaService;
     $scope.serviceAnexos = TarefaAnexosService;
@@ -9,23 +9,32 @@ appGerProjAdmin.controller("TarefaCrudController", function ($scope, $stateParam
     $scope.status = [];
 
     $scope.loadTipos = function () {
+        var d = $q.defer();
         $scope.service.getTipos(function (data) {
             for (var i in data) {
                 $scope.tipos.push({id: i, nome: data[i]});
             }
+            d.resolve();
         });
+        return d.promise;
     };
     $scope.loadStatus = function () {
+        var d = $q.defer();
         $scope.service.getStatus(function (data) {
             for (var i in data) {
                 $scope.status.push({id: i, nome: data[i]});
             }
+            d.resolve();
         });
+        return d.promise;
     };
     $scope.loadProjetos = function () {
+        var d = $q.defer();
         $scope.service.getProjetos(function (data) {
             $scope.projetos = data.results;
+            d.resolve();
         });
+        return d.promise;
     };
 
     if ($state.$current.name == 'tarefa-create') {
@@ -60,14 +69,15 @@ appGerProjAdmin.controller("TarefaCrudController", function ($scope, $stateParam
         $scope.page_title = "Alterar Tarefa";
         $scope.tar_codigo = $stateParams.id;
         $scope.submit_action = "Salvar Alterações";
-
+        
         TarefaService.getTarefa($stateParams.id, function (data) {
-            $scope.loadTipos();
-            $scope.loadStatus();
-            $scope.loadProjetos();
-            
-            $scope.service.selectedTarefa = data;
-
+            $scope.loadTipos().then(function(){
+                $scope.loadStatus().then(function(){
+                    $scope.loadProjetos().then(function(){
+                        $scope.service.selectedTarefa = data;
+                    });
+                });                
+            });
         }, function (err) {
             toaster.pop({
                 type: 'error',
@@ -95,16 +105,24 @@ appGerProjAdmin.controller('TarefaListController', function ($scope, $state, Tar
     $scope.projetos = [];
     $scope.tipos = [];
     $scope.status = [];
+    $scope.tiposDesc = {};
+    $scope.statusDesc = {};
+    $scope.projetoDesc = {};
 
     $scope.service.getProjetos(function (data) {
         $scope.projetos = data.results;
+        for (i in $scope.projetos){
+            $scope.projetoDesc[$scope.projetos[i].id] = $scope.projetos[i].nome;
+        }
     });
     $scope.service.getTipos(function (data) {
+        $scope.tiposDesc = data;
         for (var i in data) {
             $scope.tipos.push({id: i, nome: data[i]});
         }
     });
     $scope.service.getStatus(function (data) {
+        $scope.statusDesc = data;
         for (var i in data) {
             $scope.status.push({id: i, nome: data[i]});
         }
@@ -123,7 +141,7 @@ appGerProjAdmin.controller('TarefaListController', function ($scope, $state, Tar
         }).indexOf(search);
         return source[index].nome;
     };
-
+    
     $scope.service.doSearch();
 });
 

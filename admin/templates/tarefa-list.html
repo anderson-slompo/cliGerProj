@@ -86,11 +86,11 @@
                         <tbody>
                             <tr ng-repeat="tarefa in service.tarefas">
                                 <td class="text-center">{{tarefa.id}}</td>
-                                <td class="text-center">{{tarefa.projeto.nome}}</td>
+                                <td class="text-center">{{projetoDesc[tarefa.id_projeto]}}</td>
                                 <td class="text-left">{{tarefa.nome}}</td>
                                 <td class="text-left">{{tarefa.descricao}}</td>
-                                <td class="text-left">{{getDesc(service.tipos,tarefa.tipo)}}</td>
-                                <td class="text-left">{{getDesc(service.status,tarefa.status)}}</td>
+                                <td class="text-left">{{tiposDesc[tarefa.tipo]}}</td>
+                                <td class="text-left">{{statusDesc[tarefa.status]}}</td>
                                 <td class="text-center">
                                     <a ui-sref="tarefa-show({id: tarefa.id})" class="fa fa-search" title="Visualizar tarefa #{{tarefa.id}}"></a>&nbsp;
                                     <a ui-sref="tarefa-edit({id: tarefa.id})" class="fa fa-pencil" title="Editar tarefa #{{tarefa.id}}"></a>&nbsp;
