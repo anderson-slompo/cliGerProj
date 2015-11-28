@@ -5,7 +5,8 @@
  */
 
 body {
-    background-color: #f8f8f8;
+    background-color: #0D2233;
+    height:100%;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -25,7 +26,51 @@ body {
 #page-wrapper {
     padding: 0 15px;
     min-height: 568px;
-    background-color: #fff;
+    background-color: #FFFAE4;
+}
+
+.page-header > i {
+    color: #94B500;
+}
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+   background-color:  #DBDBD4!important;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #DBDBD4!important;
+}
+
+#panel-relatorio {
+    border: none!important;
+    border-bottom: 1px solid #DBDBD4!important;
+    background: #FFF9E4;
+}
+
+.panel-header-color {
+/*    background: #98BAB5!important;*/
+    border-left: #FFF!important;
+    border-top: 2px solid #DBDBD4!important;
+    border-bottom: 2px solid #DBDBD4!important;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+/*    color: #011826!important;*/
+    color: #94B500!important;
+}
+
+.table-striped > thead {
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #94B500!important;
+    border-top: 2px solid #DBDBD4!important;
+}
+
+.page-header-titulo{
+    text-transform: uppercase; 
+    font-weight: bold; 
+    border-bottom: 1px solid #999;
 }
 
 @media(min-width:768px) {
@@ -41,6 +86,10 @@ body {
     margin-right: 0;
 }
 
+.navbar-brand {
+    color: #94B500!important;
+}
+
 .navbar-top-links li {
     display: inline-block;
 }
@@ -52,6 +101,27 @@ body {
 .navbar-top-links li a {
     padding: 15px;
     min-height: 50px;
+    color: #07BAB5;
+}
+
+.nav > li > a {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FFF;
+}
+
+.nav > li > a > i {
+    color: #07BAB5;
+}
+
+#side-menu > li > a  > i {
+    color: #94B500;
+    padding-left: 5px;
+    margin-right: 5%;
+}
+
+.nav > li > a:hover {
+    background: #000!important;
 }
 
 .navbar-top-links .dropdown-menu li {
@@ -95,6 +165,12 @@ body {
     left: auto;
 }
 
+.navbar-default {
+    background: #0D2233!important;
+    border: none;
+}
+
+
 .sidebar .sidebar-nav.navbar-collapse {
     padding-right: 0;
     padding-left: 0;
@@ -108,8 +184,9 @@ body {
     border-bottom: 1px solid #e7e7e7;
 }
 
-.sidebar ul li a.active {
-    background-color: #eee;
+.sidebar ul li a.active,
+.nav > li > a:focus, .nav > li > a:hover{
+    background-color: #000;
 }
 
 .sidebar .arrow {
@@ -143,6 +220,8 @@ body {
         position: absolute;
         width: 250px;
         margin-top: 51px;
+        background: #0D2233;
+        height:auto!important; min-height:100%!important;
     }
 
     .navbar-top-links .dropdown-messages,
