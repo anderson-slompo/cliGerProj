@@ -50,7 +50,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th>Nome</th>
+                                <th class="text-left">Nome</th>
                                 <th class="text-center">Data Admissão</th>
                                 <th class="text-center">Data Nascimento</th>
                                 <th class="text-center">Status</th>
@@ -60,7 +60,7 @@
                         <tbody>
                             <tr ng-repeat="fun in funcionarios.funcionarios">
                                 <td class="text-center">{{fun.id}}</td>
-                                <td>{{fun.nome}}</td>
+                                <td class="text-left">{{fun.nome}}</td>
                                 <td class="text-center">{{fun.data_admissao|date:"dd/MM/yyyy"}}</td>
                                 <td class="text-center">{{fun.data_nascimento|date:"dd/MM/yyyy"}}</td>
                                 <td class="text-center">{{fun.status?"Ativo" : "Inativo"}}</td>

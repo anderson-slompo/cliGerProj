@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-titulo"><i class="fa fa-tasks"></i> {{page_title}} </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tarefa #{{tar_codigo}}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Nome:</div>
+                            <div class="col-lg-4">{{service.selectedTarefa.nome}}</div>
+
+                            <div class="col-lg-2 text-right">Descrição:</div>
+                            <div class="col-lg-4">{{service.selectedTarefa.descricao}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Tipo:</div>
+                            <div class="col-lg-4">{{service.selectedTarefa.tipo}}</div>
+
+                            <div class="col-lg-2 text-right">Status:</div>
+                            <div class="col-lg-4">{{service.selectedTarefa.status}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Projeto:</div>
+                            <div class="col-lg-10">{{service.selectedTarefa.id_projeto}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">&nbsp;</div>
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="col-lg-6" ng-show="service.selectedTarefa.itens.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Itens</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Descrição</th>
+                                        <th>% da tarefa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in service.selectedTarefa.itens">
+                                        <td>{{item.titulo}}</td>
+                                        <td>{{item.descricao}}</td>
+                                        <td>{{item.porcentagem}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-6" ng-show="service.selectedTarefa.anexos.length > 0">
+                            <table class="table table-striped table-hover">
+                                <caption>Anexos</caption>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Descrição</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="anexo in service.selectedTarefa.anexos">
+                                        <td class="text-center">{{anexo.id}}</td>
+                                        <td class="text-left">{{anexo.nome}}</td>
+                                        <td class="text-left">{{anexo.descricao}}</td>
+                                        <td class="text-center">
+                                            <a href ng-click="dowloadlink(anexo.id)" class="fa fa-download"></a>&nbsp;
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="button" class="btn btn-default btn-warning" ui-sref="tarefa-edit({id: tar_codigo})"><i class="fa fa-pencil"></i> Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

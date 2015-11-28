@@ -29,39 +29,53 @@ appGerProjAdmin.factory("Tarefa", function ($resource) {
     });
 });
 
-appGerProjAdmin.factory("TipoTarefa",function($http, $q){
+appGerProjAdmin.factory("TipoTarefa", function ($http, $q) {
     var self = {
-        tipos:null,
-        get:function(){
+        tipos: null,
+        get: function () {
             var d = $q.defer();
-            
-            if( self.tipos !== null ){
+
+            if (self.tipos !== null) {
                 d.resolve(self.tipos);
-            } else{
-                $http.get(wsHost + 'tarefas/tipos').success(function(data){
+            } else {
+                $http.get(wsHost + 'tarefas/tipos').success(function (data) {
                     self.tipos = data;
                     d.resolve(self.tipos);
                 });
-            }            
+            }
+            return d.promise;
+        },
+        getID: function (id) {
+            var d = $q.defer();
+            $http.get(wsHost + 'tarefas/tipos/'+id).success(function (data) {
+                d.resolve(data);
+            });
             return d.promise;
         }
     };
     return self;
 });
-appGerProjAdmin.factory("StatusTarefa",function($http, $q){
+appGerProjAdmin.factory("StatusTarefa", function ($http, $q) {
     var self = {
-        status:null,
-        get:function(){
+        status: null,
+        get: function () {
             var d = $q.defer();
-            
-            if( self.status !== null ){
+
+            if (self.status !== null) {
                 d.resolve(self.status);
-            } else{
-                $http.get(wsHost + 'tarefas/status').success(function(data){
+            } else {
+                $http.get(wsHost + 'tarefas/status').success(function (data) {
                     self.status = data;
                     d.resolve(self.status);
                 });
-            }            
+            }
+            return d.promise;
+        },
+        getID: function (id) {
+            var d = $q.defer();
+            $http.get(wsHost + 'tarefas/status/'+id).success(function (data) {
+                d.resolve(data);
+            });
             return d.promise;
         }
     };
