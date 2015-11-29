@@ -206,7 +206,18 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
             });
 
     $urlRouterProvider.otherwise("/");
-});
+
+
+}).run(['$state', '$rootScope', '$http', function ($state, $rootScope, $http) {
+        $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {
+            if (!localStorage.gerProjAdminAccesToken) {
+                e.preventDefault();
+                document.location.href = 'login.html';
+            } 
+        });
+        if(localStorage.gerProjAdminAccesToken)
+            $http.defaults.headers.common.Authorization = 'Digest token='+localStorage.gerProjAdminAccesToken;
+    }]);
 
 appGerProjAdmin.config(function ($resourceProvider, laddaProvider, $datepickerProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = true;
