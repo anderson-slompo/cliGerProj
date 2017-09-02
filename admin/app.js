@@ -33,8 +33,8 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     }
 ]);
 
-var wsHost = "http://localhost.wsGerProj/admin/";
-var downHost = "http://localhost.wsGerProj/download/";
+var wsHost = "http://localhost.wspromind/admin/";
+var downHost = "http://localhost.wspromind/download/";
 
 appGerProjAdmin.directive('preventEnter', function () {
     return {

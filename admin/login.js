@@ -1,4 +1,4 @@
-var wsHost = "http://localhost.wsGerProj/admin/";
+var wsHost = "http://localhost.wspromind/admin/";
 
 angular.module('gerProjAdminLogin', [
     'toaster',
