@@ -213,7 +213,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
             if (!localStorage.gerProjAdminAccesToken) {
                 e.preventDefault();
                 document.location.href = 'login.html';
-            } 
+            }
         });
         if(localStorage.gerProjAdminAccesToken)
             $http.defaults.headers.common.Authorization = 'Digest token='+localStorage.gerProjAdminAccesToken;
@@ -232,6 +232,25 @@ appGerProjAdmin.config(function ($resourceProvider, laddaProvider, $datepickerPr
         trigger: 'click'
     });
 });
+
+appGerProjAdmin.factory('verifySessionExpired', ['$q', '$injector', function($q, $injector) {  
+    var verifySessionExpired = {
+        responseError: function(response) {
+            if (response.status == 401){
+                localStorage.removeItem('gerProjAdminAccesToken');
+                localStorage.removeItem('gerProjAdminUserLogin');
+                localStorage.removeItem('gerProjAdminUserName');
+                document.location.href = 'login.html';
+            }
+            return $q.reject(response);
+        }
+    };
+    return verifySessionExpired;
+}]);
+appGerProjAdmin.config(['$httpProvider', function($httpProvider) {  
+    $httpProvider.interceptors.push('verifySessionExpired');
+}]);
+
 
 appGerProjAdmin.directive('ccSpinner', function () {
     return {
