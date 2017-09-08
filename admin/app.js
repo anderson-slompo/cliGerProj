@@ -240,6 +240,7 @@ appGerProjAdmin.factory('verifySessionExpired', ['$q', '$injector', function($q,
                 localStorage.removeItem('gerProjAdminAccesToken');
                 localStorage.removeItem('gerProjAdminUserLogin');
                 localStorage.removeItem('gerProjAdminUserName');
+                localStorage.removeItem('gerProjUser');
                 document.location.href = 'login.html';
             }
             return $q.reject(response);
