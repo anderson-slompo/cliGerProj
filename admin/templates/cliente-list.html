@@ -9,7 +9,7 @@
         <div id="panel-relatorio" class="panel panel-default">
             <div class="panel-heading panel-header-color" >
                 <span>Pesquisa</span>
-                <div class="pull-right">
+                <div class="pull-right" ng-if="currentUserIsGerente()">
                     <button type="button" class="btn btn-default btn-xs btn-success" ui-sref="cliente-create">Novo Cliente</button>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                                 <th class="text-center">ID</th>
                                 <th>Nome</th>
                                 <th class="text-center">ID Externo</th>
-                                <th class="text-center">Ações</th>
+                                <th class="text-center" ng-if="currentUserIsGerente()">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,7 +56,7 @@
                                 <td class="text-center">{{cli.id}}</td>
                                 <td>{{cli.nome}}</td>
                                 <td class="text-center">{{cli.id_externo}}</td>
-                                <td class="text-center">
+                                <td class="text-center" ng-if="currentUserIsGerente()">
                                     <a ui-sref="cliente-edit({id: cli.id})" class="fa fa-pencil" title="Editar cliente #{{cli.id}}"></a>&nbsp;
                                     <a class="fa fa-trash-o" title="Remover cliente #{{cli.id}}" ng-click="remove(cli)" href="javascript:void(0)"></a>
                                 </td>

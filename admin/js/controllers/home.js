@@ -7,15 +7,15 @@ appGerProjAdmin.controller('HomeController',function($scope, $rootScope){
         document.location.href = 'login.html';
     };
     $rootScope.currentUserIsGerente = function(){
-        return localStorage.gerProjIsGerente; 
+        return JSON.parse(localStorage.gerProjIsGerente);
     };
     $rootScope.currentUserIsDesenvolvedor = function(){
-        return localStorage.gerProjIsDesenvolvedor; 
+        return JSON.parse(localStorage.gerProjIsDesenvolvedor);
     };
     $rootScope.currentUserIsTester = function(){
-        return localStorage.gerProjIsTester; 
+        return JSON.parse(localStorage.gerProjIsTester); 
     };
     $rootScope.currentUserIsImplantador = function(){
-        return localStorage.gerProjIsImplantador; 
+        return JSON.parse(localStorage.gerProjIsImplantador); 
     };
 });

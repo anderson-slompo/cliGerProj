@@ -9,7 +9,7 @@
         <div class="panel panel-default">
             <div class="panel-heading panel-header-color">
                 <span>Pesquisa</span>
-                <div class="pull-right">
+                <div class="pull-right" ng-if="currentUserIsGerente()">
                     <button type="button" class="btn btn-default btn-xs btn-success" ui-sref="projeto-create">Novo Projeto</button>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                                 <td class="text-left">{{proj.descricao}}</td>
                                 <td class="text-center">
                                     <a ui-sref="projeto-show({id: proj.id})" class="fa fa-search" title="Visualizar projeto #{{proj.id}}"></a>&nbsp;
-                                    <a ui-sref="projeto-edit({id: proj.id})" class="fa fa-pencil" title="Editar projeto #{{proj.id}}"></a>&nbsp;
+                                    <a ui-sref="projeto-edit({id: proj.id})" class="fa fa-pencil" title="Editar projeto #{{proj.id}}" ng-if="currentUserIsGerente()"></a>&nbsp;
                                 </td>
                             </tr>
                         </tbody>
