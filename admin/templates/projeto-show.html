@@ -91,7 +91,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" ng-if="currentUserIsGerente()">
                     <div class="col-lg-12 text-center">
                         <button type="button" class="btn btn-default btn-warning" ui-sref="projeto-edit({id: pro_codigo})"><i class="fa fa-pencil"></i> Editar</button>
                     </div>
