@@ -29,6 +29,18 @@ appGerProjAdmin.factory("Tarefa", function ($resource) {
     });
 });
 
+appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
+    var self = {
+        getTarefa: function(id_tarefa, fncOk, fncErr){
+            return $http.get(wsHost + 'tarefa_atribuicao/tarefa/'+id_tarefa).success(fncOk).error(fncErr);
+        },
+        save: function(atrib, fncOk, fncErr){
+            return $http.post(wsHost + 'tarefa_atribuicao', atrib).success(fncOk).error(fncErr);
+        }
+    };
+    return self;
+});
+
 appGerProjAdmin.factory("TipoTarefa", function ($http, $q) {
     var self = {
         tipos: null,

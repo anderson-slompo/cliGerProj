@@ -94,6 +94,7 @@
                                 <td class="text-center">
                                     <a ui-sref="tarefa-show({id: tarefa.id})" class="fa fa-search" title="Visualizar tarefa #{{tarefa.id}}"></a>&nbsp;
                                     <a ui-sref="tarefa-edit({id: tarefa.id})" class="fa fa-pencil" title="Editar tarefa #{{tarefa.id}}" ng-if="currentUserIsGerente()"></a>&nbsp;
+                                    <a ui-sref="tarefa-atribuicao({id: tarefa.id})" class="fa fa-bolt" title="Atribuir tarefa #{{tarefa.id}}" ng-if="currentUserIsGerente()"></a>&nbsp;
                                 </td>
                             </tr>
                         </tbody>

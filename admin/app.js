@@ -203,6 +203,14 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'TarefaCrudController'
                     }
                 }
+            }).state('tarefa-atribuicao', {
+                url: "/tarefa/atribuir/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-atribuicao.html',
+                        controller: 'TarefaAtribuicaoController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");
