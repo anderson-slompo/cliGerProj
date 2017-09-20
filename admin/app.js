@@ -2,6 +2,29 @@ String.prototype.nl2br = function ()
 {
     return this.replace(/\n/g, "<br />");
 }
+
+var Utils = {
+    logout: function(){
+        localStorage.removeItem('gerProjAdminAccesToken');
+        localStorage.removeItem('gerProjAdminUserLogin');
+        localStorage.removeItem('gerProjAdminUserName');
+        localStorage.removeItem('gerProjUser');
+        document.location.href = 'login.html';
+    },
+    currentUserIsGerente: function(){
+        return JSON.parse(localStorage.gerProjIsGerente);
+    },
+    currentUserIsDesenvolvedor: function(){
+        return JSON.parse(localStorage.gerProjIsDesenvolvedor);
+    },
+    currentUserIsTester: function(){
+        return JSON.parse(localStorage.gerProjIsTester); 
+    },
+    currentUserIsImplantador: function(){
+        return JSON.parse(localStorage.gerProjIsImplantador); 
+    }
+}
+
 var appGerProjAdmin = angular.module('gerProjAdmin', [
     'ngResource',
     'angularSpinner',
@@ -221,7 +244,14 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
             if (!localStorage.gerProjAdminAccesToken) {
                 e.preventDefault();
                 document.location.href = 'login.html';
+            } else{
+                $http.get(wsHost + 'auth/' + localStorage.gerProjAdminAccesToken);
             }
+            $rootScope.logout = Utils.logout;
+            $rootScope.currentUserIsGerente = Utils.currentUserIsGerente;
+            $rootScope.currentUserIsDesenvolvedor = Utils.currentUserIsDesenvolvedor;
+            $rootScope.currentUserIsTester = Utils.currentUserIsTester;
+            $rootScope.currentUserIsImplantador = Utils.currentUserIsImplantador;
         });
         if(localStorage.gerProjAdminAccesToken)
             $http.defaults.headers.common.Authorization = 'Digest token='+localStorage.gerProjAdminAccesToken;

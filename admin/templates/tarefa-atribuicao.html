@@ -13,34 +13,59 @@
                 <form role="form" novalidate="" ng-submit="save()" >
                     <div class="row"> 
                         <div class="col-lg-12">
-                            <div class=" col-lg-6 form-group">
+                            <div class=" col-lg-4 form-group">
                                 <label>Nome</label>
-                                {{ atrib.tarefa_nome }}
+                                {{ data.tarefa_nome }}
                             </div>                       
-                            <div class="col-lg-6 form-group">
+                            <div class="col-lg-4 form-group">
                                 <label>Projeto</label>
-                                {{ atrib.projeto_nome }}
+                                {{ data.projeto_nome }}
+                            </div>
+                            <div class=" col-lg-4 form-group">
+                                <label>Status</label>
+                                {{ data.status_nome }}
                             </div>
                         </div>
                     </div>
                     <div class="row"> 
                         <div class="col-lg-12">
                             <div class=" col-lg-6 form-group">
-                                <label>Status</label>
-                                {{ atrib.status_nome }}
+                                <label>Fase</label>                                
+                                <select 
+                                    class="form-control"
+                                    ng-model="atrib.fase"
+                                    ng-change="changeFase()"
+                                    required="">
+                                    <option value="">--SELECIONE--</option>
+                                    <option 
+                                        ng-repeat="(idFase, descFase) in data.fases" 
+                                        value="{{idFase}}">{{descFase}}</option> 
+                                </select>
                             </div>
                             <div class=" col-lg-6 form-group">
                                 <label>Funcionário</label>
                                 <select 
                                     class="form-control"
                                     ng-model="atrib.id_funcionario"
-                                    ng-options="func.nome for func in atrib.funcionarios track by func.id"
                                     required="">
-                                    <option value="">--SELECIONE--</option>
+                                    <option value="" ng-if="ifFaseSelected(false)">--SELECIONE FASE--</option>
+                                    <option value="" ng-if="ifFaseSelected(true)">--SELECIONE--</option>
                                     <option 
-                                        ng-repeat="func in atrib.funcionarios" 
+                                        ng-repeat="func in data.currFuncionarios" 
                                         value="{{func.id}}">{{func.nome}}</option> 
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-lg-12">
+                            <div class=" col-lg-6 form-group">
+                                <label>Data Inícial</label>
+                                <input class="form-control" type="text" id="data_inicio" name="data_inicio" ng-model="atrib.data_inicio" bs-datepicker required=""/>
+                            </div>
+                            <div class=" col-lg-6 form-group">
+                                <label>Data Final</label>
+                                <input class="form-control" type="text" id="data_termino" name="data_termino" ng-model="atrib.data_termino" bs-datepicker required=""/>
                             </div>
                         </div>
                     </div>

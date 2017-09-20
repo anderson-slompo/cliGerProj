@@ -5,13 +5,10 @@ appGerProjAdmin.controller("TarefaAtribuicaoController", function ($q, $scope, $
     $scope.tar_codigo = $stateParams.id;
     $scope.submit_action = "Realizar atribuição";
     $scope.atrib = {};
-    $scope.atrib.funcionarios = [];
-
+    $scope.data = {currFuncionarios:[]};
+    
     TarefaAtribuicaoService.getTarefa($stateParams.id, function(data){
-        $scope.atrib.tarefa_nome = data.tarefa_nome;
-        $scope.atrib.projeto_nome = data.projeto_nome;
-        $scope.atrib.status_nome = data.status_nome;
-        $scope.atrib.funcionarios = data.funcionarios;
+        $scope.data = data;
         $scope.atrib.id_tarefa = $stateParams.id;
     }, function (err) {
         toaster.pop({
@@ -20,6 +17,18 @@ appGerProjAdmin.controller("TarefaAtribuicaoController", function ($q, $scope, $
         });
         $state.go("tarefa-list");
     });
+
+    $scope.changeFase = function(){
+        if($scope.atrib.fase == ''){
+            $scope.data.currFuncionarios = [];
+        } else{
+            $scope.data.currFuncionarios = $scope.data.funcionarios[$scope.atrib.fase];
+        }
+    };
+
+    $scope.ifFaseSelected = function(selected){
+        return (selected && $scope.atrib.fase != null) || (!selected && $scope.atrib.fase == null);
+    }
 
     $scope.save = function () {
         $scope.service.createAtribuicao($scope.atrib).then(function(){
