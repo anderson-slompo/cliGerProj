@@ -54,7 +54,7 @@ appGerProjAdmin.service('TarefaAtribuicaoService', function (TarefaAtribuicao, T
             }, function (error) {
                 toaster.pop({
                     type: 'error',
-                    body: 'Erro ao atribuir tarefa:<br/>' + error.data.error.nl2br(),
+                    body: 'Erro ao atribuir tarefa:<br/>' + error.error.nl2br(),
                     bodyOutputType: 'trustedHtml'
                 });
             });
