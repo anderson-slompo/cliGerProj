@@ -39,6 +39,9 @@ appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
         },
         getAtribuicoes: function(fncOk, fncErr){
             $http.get(wsHost + 'tarefa_atribuicao/atuais').success(fncOk).error(fncErr);
+        },
+        get: function(id, fncOk, fncErr){
+            return $http.get(wsHost + 'tarefa_atribuicao/'+id).success(fncOk).error(fncErr);
         }
     };
     return self;

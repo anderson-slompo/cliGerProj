@@ -234,6 +234,14 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'TarefaAtribuicaoController'
                     }
                 }
+            }).state('tarefa-interacao', {
+                url: "/tarefa/interagir/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/tarefa-interacao.html',
+                        controller: 'TarefaInteracaoController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");

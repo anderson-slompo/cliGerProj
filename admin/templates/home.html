@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="list-group list-group-flush">
                     <span class="list-group-item" ng-class="{'list-group-item-danger': atrib.atrasada}" ng-repeat="atrib in atribuicoes[DEPARTAMENTO_DEV]" >
-                        <a href="#{{atrib.tarefa_id}}" title="Interagir com a tarefa #{{atrib.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
+                        <a ui-sref="tarefa-interacao({id: atrib.id})" title="Interagir com a tarefa #{{atrib.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
                         <a ui-sref="tarefa-show({id: atrib.tarefa_id})" class="fa fa-fw fa-search" ></a>                    
                         {{atrib.tarefa_nome}} 
                         <span class="pull-right text-muted medium">Previsão {{atrib.inicio}} até {{atrib.termino}} | {{atrib.projeto_nome}} ({{atrib.status_nome}})</span>
@@ -28,7 +28,7 @@
             <div class="panel-body">
                 <div class="list-group list-group-flush">
                     <span class="list-group-item" ng-class="{'list-group-item-danger': atrib.atrasada}" ng-repeat="atrib in atribuicoes[DEPARTAMENTO_TESTE]" >
-                        <a href="#{{atrib.tarefa_id}}" title="Interagir com a tarefa #{{atrib.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
+                        <a ui-sref="tarefa-interacao({id: atrib.id})" title="Interagir com a tarefa #{{atrib.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
                         <a ui-sref="tarefa-show({id: atrib.tarefa_id})" class="fa fa-fw fa-search" ></a>
                         <a href="#{{atrib.tarefa_id}}" title="Reportar erro para tarefa #{{atrib.tarefa_id}}" class="fa fa-fw fa-bug"></a>
                         {{atrib.tarefa_nome}} 
