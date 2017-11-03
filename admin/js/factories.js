@@ -55,6 +55,15 @@ appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
     return self;
 });
 
+appGerProjAdmin.factory("Erro", function ($http, $q) {
+    var self = {
+        save: function(erro, fncOk, fncErr){
+            return $http.post(wsHost + 'erro', erro).success(fncOk).error(fncErr);
+        }
+    };
+    return self;
+});
+
 appGerProjAdmin.factory("TipoTarefa", function ($http, $q) {
     var self = {
         tipos: null,

@@ -242,6 +242,14 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'TarefaInteracaoController'
                     }
                 }
+            }).state('erro-report', {
+                url: "/tarefa/report-error/:id_tarefa",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/error-report.html',
+                        controller: 'ErroController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");
@@ -307,5 +315,14 @@ appGerProjAdmin.directive('ccSpinner', function () {
             'isLoading': '=',
             'message': '@'
         }
+    }
+});
+
+appGerProjAdmin.filter('nl2br', function($sce){
+    return function(msg,is_xhtml) { 
+        var is_xhtml = is_xhtml || true;
+        var breakTag = (is_xhtml) ? '<br />' : '<br>';
+        var msg = (msg + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+        return $sce.trustAsHtml(msg);
     }
 });
