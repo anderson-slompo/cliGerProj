@@ -29,6 +29,14 @@ appGerProjAdmin.factory("Tarefa", function ($resource) {
     });
 });
 
+appGerProjAdmin.factory("TarefaInteracao", function ($resource) {
+    return $resource(wsHost + "tarefa_interacao/:id/", {id: '@id'}, {
+        update: {
+            method: 'PUT'
+        }
+    });
+});
+
 appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
     var self = {
         getTarefa: function(id_tarefa, fncOk, fncErr){
