@@ -77,6 +77,12 @@ appGerProjAdmin.factory("DashGerente", function($http, $q){
         },
         statusProjetos: function(fncOk){
             return $http.get(wsHost + 'dash/gerente/statusProjetos').success(fncOk);
+        },
+        tarefasAtrasadas: function(fncOk){
+            return $http.get(wsHost + 'dash/gerente/tarefasAtrasadas').success(fncOk);
+        },
+        tarefasExecucao: function(fncOk){
+            return $http.get(wsHost + 'dash/gerente/tarefasExecussao').success(fncOk);
         }
     };
     return self;

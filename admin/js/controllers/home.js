@@ -2,6 +2,9 @@ appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope,
     $scope.page_title = "Dashboard";
     $scope.atribuicoes = {};
     $scope.tarefasAguardandoAtribuicao = [];
+    $scope.statusProjetos = [];
+    $scope.tarefasAtrasadas = [];
+    $scope.tarefasExecucao = [];
 
     $scope.DEPARTAMENTO_DEV   = 1;
     $scope.DEPARTAMENTO_TESTE = 2;
@@ -28,7 +31,12 @@ appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope,
         DashGerente.statusProjetos(function(data){
             $scope.statusProjetos = data;
         });
-        
+        DashGerente.tarefasAtrasadas(function(data){
+            $scope.tarefasAtrasadas = data;
+        });
+        DashGerente.tarefasExecucao(function(data){
+            $scope.tarefasExecucao = data;
+        });
     }
 
     $scope.fix = function(id_erro, erro_nome){

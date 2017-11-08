@@ -33,3 +33,39 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-6">        
+                <div class="panel panel-default">
+                    <div class="panel-heading">Tarefas em execução</div>
+                    <div class="panel-body">
+                        <div class="list-group list-group-flush">
+                            <span class="list-group-item" ng-class="{'list-group-item-danger': atrib.atrasada}" ng-repeat="tar in tarefasExecucao" >
+                                <a ui-sref="tarefa-show({id: tar.tarefa_id})" title="Visualizar a tarefa #{{tar.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
+                                {{tar.tarefa_nome}} 
+                                <span class="pull-right text-muted medium">{{tar.status_nome}} | {{tar.projeto_nome}}</span>
+                            </span>
+                            <span class="list-group-item" ng-if="tarefasExecucao.length == 0 || tarefasExecucao == undefined">Nenhuma tarefa encontrada</span>
+                        </div>
+                    </div>            
+                </div>        
+            </div>
+    
+            <div class="col-lg-6">        
+                <div class="panel panel-default">
+                    <div class="panel-heading">Tarefas em atrasadas</div>
+                    <div class="panel-body">
+                        <div class="list-group list-group-flush">
+                            <span class="list-group-item" ng-class="{'list-group-item-danger': atrib.atrasada}" ng-repeat="tar in tarefasAtrasadas" >
+                                <a ui-sref="tarefa-show({id: tar.tarefa_id})" title="Visualizar a tarefa #{{tar.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
+                                {{tar.tarefa_nome}} 
+                                <span class="pull-right text-muted medium">{{tar.status_nome}} | {{tar.projeto_nome}}</span>
+                            </span>
+                            <span class="list-group-item" ng-if="tarefasAtrasadas.length == 0 || tarefasAtrasadas == undefined">Nenhuma tarefa encontrada</span>
+                        </div>
+                    </div>            
+                </div>        
+            </div>
+        </div>
+    </div>
