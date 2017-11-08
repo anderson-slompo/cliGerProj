@@ -47,7 +47,23 @@ appGerProjAdmin.service('ErroService', function (Erro, $q, toaster) {
             }, function (error) {
                 toaster.pop({
                     type: 'error',
-                    body: 'Erro ao reportar erro:<br/>' + error.data.error.nl2br(),
+                    body: 'Erro ao reportar erro:<br/>' + error.error.nl2br(),
+                    bodyOutputType: 'trustedHtml'
+                });
+            });
+            return d.promise;
+        },
+        fix: function(id_erro){
+            var d = $q.defer();
+            self.isSaving = true;
+            Erro.fix(id_erro, function (data) {
+                self.isSaving = false;
+                toaster.pop('success', data.message.message);
+                d.resolve(data.message.id);
+            }, function (error) {
+                toaster.pop({
+                    type: 'error',
+                    body: 'Erro ao corrigir erro:<br/>' + error.error.nl2br(),
                     bodyOutputType: 'trustedHtml'
                 });
             });

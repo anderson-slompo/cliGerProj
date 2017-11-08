@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">        
+            <div class="panel panel-default">
+                <div class="panel-heading">Projetos</div>
+                <div class="panel-body">
+                    <div class="list-group list-group-flush">
+                        <span class="list-group-item" ng-repeat="pro in statusProjetos" >
+                            <a ui-sref="projeto-show({id: pro.id})" title="Visualizar projeto #{{pro.id}}" class="fa fa-fw fa-search"></a>
+                            {{pro.nome}} 
+                            <span class="pull-right text-muted medium">Execução: {{pro.tot_em_execucao}} | Atrasadas: {{pro.tot_atrasadas}}</span>
+                        </span>
+                        <span class="list-group-item" ng-if="statusProjetos.length == 0 || statusProjetos == undefined">Nenhum projeto emcontrado</span>
+                    </div>
+                </div>            
+            </div>        
+        </div>
+
+        <div class="col-lg-6">        
+            <div class="panel panel-default">
+                <div class="panel-heading">Tarefas aguardando atribuição</div>
+                <div class="panel-body">
+                    <div class="list-group list-group-flush">
+                        <span class="list-group-item" ng-class="{'list-group-item-danger': atrib.atrasada}" ng-repeat="tar in tarefasAguardandoAtribuicao" >
+                            <a ui-sref="tarefa-atribuicao({id: tar.tarefa_id})" title="Atribuir a tarefa #{{tar.tarefa_id}}" class="fa fa-fw fa-bolt"></a>
+                            {{tar.tarefa_nome}} 
+                            <span class="pull-right text-muted medium">{{tar.status_nome}} | {{tar.projeto_nome}}</span>
+                        </span>
+                        <span class="list-group-item" ng-if="tarefasAguardandoAtribuicao.length == 0 || tarefasAguardandoAtribuicao == undefined">Nenhuma tarefa pendente de atribuição</span>
+                    </div>
+                </div>            
+            </div>        
+        </div>
+    </div>
+</div>

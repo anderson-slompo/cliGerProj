@@ -59,6 +59,24 @@ appGerProjAdmin.factory("Erro", function ($http, $q) {
     var self = {
         save: function(erro, fncOk, fncErr){
             return $http.post(wsHost + 'erro', erro).success(fncOk).error(fncErr);
+        },
+        fix: function(id, fncOk, fncErr){
+            return $http({
+                method: 'PUT',
+                url: wsHost + '/erro/fix/'+id
+            }).success(fncOk).error(fncErr);
+        }
+    };
+    return self;
+});
+
+appGerProjAdmin.factory("DashGerente", function($http, $q){
+    var self = {
+        tarefasAguardandoAtribuicao: function(fncOk){
+            return $http.get(wsHost + 'dash/gerente/tarefasAguardandoAtribuicao').success(fncOk);
+        },
+        statusProjetos: function(fncOk){
+            return $http.get(wsHost + 'dash/gerente/statusProjetos').success(fncOk);
         }
     };
     return self;
