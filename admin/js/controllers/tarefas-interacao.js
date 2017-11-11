@@ -5,6 +5,12 @@ appGerProjAdmin.controller("TarefaInteracaoController", function ($q, $scope, $s
 
     TarefaAtribuicao.get($stateParams.id,function(data){
         $scope.atribuicao = data;
+        if($scope.atribuicao.erros instanceof Array){
+            $scope.interacao.fixed_errors = {};
+            for(i in $scope.atribuicao.erros){
+                $scope.interacao.fixed_errors[$scope.atribuicao.erros[i].id]= false;
+            }
+        }
         $scope.interacao.id_tarefa = data.tarefa.id;
         $scope.interacao.id_funcionario = data.id_funcionario;
         $scope.interacao.fase = data.fase;
