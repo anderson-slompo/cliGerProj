@@ -5,7 +5,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
         $scope.impl_codigo = 0;
         $scope.implantacoes = ImplantacaoService;
         $scope.submit_action = "Salvar";
-        $scope.implantacoes.selectedImplantacao = {tarefas:[]};
+        $scope.implantacoes.selectedImplantacao = {nome:"",descricao:"",tarefas:[]};
 
         $scope.comboTarefa = {disponiveis: [], associados: []};
 
@@ -82,7 +82,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
         $scope.implantacoes = ImplantacaoService;
     
         ImplantacaoService.getImplantacao($stateParams.id, function (data) {
-            $scope.implantacoes.selectedImpantacao = data;
+            $scope.implantacoes.selectedImplantacao = data;
         }, function (err) {
             toaster.pop({
                 type: 'error',
@@ -103,7 +103,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
             'hasMore': true,
             'isLoading': false,
             'isSaving': false,
-            'selectedImpantacao': null,
+            'selectedImplantacao': null,
             'implantacoes': [],
             'search_id': null,
             'search_nome': null,
