@@ -33,3 +33,10 @@
         </li>
     </ul>
 </div>
+<div class="sidebar-nav navbar-collapse" ng-if="currentUserIsGerente() || currentUserIsImplantador()">
+    <ul class="nav" id="side-menu">
+        <li>
+            <a href="index.html#/implantacao/list"><i class="fa fa-paper-plane fa-fw"></i>Implantações</a>
+        </li>
+    </ul>
+</div>

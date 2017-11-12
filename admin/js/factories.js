@@ -37,6 +37,14 @@ appGerProjAdmin.factory("TarefaInteracao", function ($resource) {
     });
 });
 
+appGerProjAdmin.factory("Implantacao", function ($resource) {
+    return $resource(wsHost + "implantacao/:id/", {id: '@id'}, {
+        update: {
+            method: 'PUT'
+        }
+    });
+});
+
 appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
     var self = {
         getTarefa: function(id_tarefa, fncOk, fncErr){
@@ -47,6 +55,9 @@ appGerProjAdmin.factory("TarefaAtribuicao", function ($http, $q) {
         },
         getAtribuicoes: function(fncOk, fncErr){
             $http.get(wsHost + 'tarefa_atribuicao/atuais').success(fncOk).error(fncErr);
+        },
+        getDisponiveisImplantacao: function(fncOk, fncErr){
+            $http.get(wsHost + 'tarefa_atribuicao/disponiveis_implantacao').success(fncOk).error(fncErr);
         },
         get: function(id, fncOk, fncErr){
             return $http.get(wsHost + 'tarefa_atribuicao/'+id).success(fncOk).error(fncErr);

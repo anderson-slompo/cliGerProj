@@ -250,6 +250,32 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'ErroController'
                     }
                 }
+            }).state('implantacao-list', {
+                url: "/implantacao/list",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/implantacao-list.html',
+                        controller: 'ImplantacaoListController'
+                    }
+                }
+            })
+            .state('implantacao-show', {
+                url: "/implantacao/show/:id",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/implantacao-show.html',
+                        controller: 'ImplantacaoShowController'
+                    }
+                }
+            })
+            .state('implantacao-create', {
+                url: "/implantacao/create",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/implantacao-edit.html',
+                        controller: 'ImplantacaoCreateController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");
@@ -268,6 +294,7 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
             $rootScope.currentUserIsDesenvolvedor = Utils.currentUserIsDesenvolvedor;
             $rootScope.currentUserIsTester = Utils.currentUserIsTester;
             $rootScope.currentUserIsImplantador = Utils.currentUserIsImplantador;
+            $rootScope.gerProjAdminUserName = localStorage.gerProjAdminUserName;
         });
         if(localStorage.gerProjAdminAccesToken)
             $http.defaults.headers.common.Authorization = 'Digest token='+localStorage.gerProjAdminAccesToken;
