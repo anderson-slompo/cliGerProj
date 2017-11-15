@@ -40,7 +40,8 @@ appGerProjAdmin.factory("TarefaInteracao", function ($resource) {
 appGerProjAdmin.factory("Implantacao", function ($resource) {
     return $resource(wsHost + "implantacao/:id/", {id: '@id'}, {
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            url: wsHost + "implantacao/finish/:id"
         }
     });
 });

@@ -50,7 +50,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
         }
     
     });
-    appGerProjAdmin.controller('ImplantacaoListController', function ($scope, $modal, ImplantacaoService) {
+    appGerProjAdmin.controller('ImplantacaoListController', function ($scope, $state, $modal, ImplantacaoService) {
         $scope.page_title = "Relatório de Implantações";
         $scope.implantacoes = ImplantacaoService;
     
@@ -66,8 +66,15 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
         };
         $scope.remove = function (impl) {
             if(confirm("Deseja mesmo cancelar a implantacao #"+impl.id+" "+impl.nome+"?")){
-                $scope.implantacoes.removeImpantacao(impl).then(function () {
-                    $state.go("implantacao-list");
+                $scope.implantacoes.removeImplantacao(impl).then(function () {
+                    $state.go("implantacao-list", {}, {reload:true});
+                });
+            }
+        };
+        $scope.finish = function(impl){
+            if(confirm("Deseja mesmo finalizar a implantacao #"+impl.id+" "+impl.nome+"?")){
+                $scope.implantacoes.finishImplantacao(impl).then(function () {
+                    $state.go("implantacao-list", {}, {reload:true});
                 });
             }
         };
@@ -92,7 +99,21 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
             $state.go("implantacao-list");
         });
     
-        
+        $scope.remove = function (impl) {
+            if(confirm("Deseja mesmo cancelar a implantacao #"+impl.id+" "+impl.nome+"?")){
+                $scope.implantacoes.removeImplantacao(impl).then(function () {
+                    $state.go("implantacao-list");
+                });
+            }
+        };
+
+        $scope.finish = function(impl){
+            if(confirm("Deseja mesmo finalizar a implantacao #"+impl.id+" "+impl.nome+"?")){
+                $scope.implantacoes.finishImplantacao(impl).then(function () {
+                    $state.go("implantacao-list");
+                });
+            }
+        };
     });
 
     appGerProjAdmin.service('ImplantacaoService', function (Implantacao, $rootScope, $q, toaster) {
@@ -165,6 +186,22 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
                     toaster.pop({
                         type: 'error',
                         body: 'Erro ao atualizar implantacao #' + impl.id + '<br/>' + error.data.error.nl2br(),
+                        bodyOutputType: 'trustedHtml'
+                    });
+                });
+                return d.promise;
+            },
+            'finishImplantacao': function (impl) {
+                var d = $q.defer();
+                self.isSaving = true;
+                impl.$update().then(function (data) {
+                    self.isSaving = false;
+                    toaster.pop('success', data.message);
+                    d.resolve();
+                }, function (error) {
+                    toaster.pop({
+                        type: 'error',
+                        body: 'Erro ao finalizar implantacao #' + impl.id + '<br/>' + error.data.error.nl2br(),
                         bodyOutputType: 'trustedHtml'
                     });
                 });
