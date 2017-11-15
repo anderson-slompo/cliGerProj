@@ -80,6 +80,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
         $scope.impl_codigo = $stateParams.id;
         $scope.page_title = "Detalhes da implantação #" + $scope.impl_codigo;
         $scope.implantacoes = ImplantacaoService;
+        $scope.implantacoes.selectedImplantacao = {tarefas:[]};
     
         ImplantacaoService.getImplantacao($stateParams.id, function (data) {
             $scope.implantacoes.selectedImplantacao = data;
@@ -96,8 +97,8 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
 
     appGerProjAdmin.service('ImplantacaoService', function (Implantacao, $rootScope, $q, toaster) {
         var self = {
-            'getImplantacao': function (id) {
-                return Implantacao.get({id: id});
+            'getImplantacao': function (id, fncOk, fncError) {
+                return Implantacao.get({id: id}, fncOk, fncError);
             },
             'page': 1,
             'hasMore': true,
@@ -108,7 +109,7 @@ appGerProjAdmin.controller("ImplantacaoCreateController", function ($scope, $sta
             'search_id': null,
             'search_nome': null,
             'search_id_externo': null,
-            'ordering': 'nome',
+            'ordering': 'data_hora',
             'doSearch': function () {
                 self.hasMore = true;
                 self.page = 1;

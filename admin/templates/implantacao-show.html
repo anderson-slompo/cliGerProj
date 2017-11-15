@@ -15,21 +15,30 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-2 text-right">Nome:</div>
-                            <div class="col-lg-4">{{service.selectedImplantacao.nome}}</div>
+                            <div class="col-lg-4">{{implantacoes.selectedImplantacao.nome}}</div>
 
-                            <div class="col-lg-2 text-right">Descrição:</div>
-                            <div class="col-lg-4">{{service.selectedImplantacao.descricao}}</div>
+                            <div class="col-lg-2 text-right">Funcionário:</div>
+                            <div class="col-lg-4">{{implantacoes.selectedImplantacao.funcionario_nome}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
-                            <div class="col-lg-2 text-right">Data/hora:</div>
-                            <div class="col-lg-4">{{service.selectedImplantacao.data_hora}}</div>
-
                             <div class="col-lg-2 text-right">Status:</div>
-                            <div class="col-lg-4">{{service.selectedImplantacao.status_nome}}</div>
+                            <div class="col-lg-4">{{implantacoes.selectedImplantacao.status_nome}}</div>
+
+                            <div class="col-lg-2 text-right">Criação:</div>
+                            <div class="col-lg-4">{{implantacoes.selectedImplantacao.data_hora}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2 text-right">Descrição:</div>
+                            <div class="col-lg-10" ng-bind-html="implantacoes.selectedImplantacao.descricao|nl2br"></div>
                         </div>
                     </div>
                 </div>
@@ -49,7 +58,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="tar in service.selectedImplantacao.tarefas">
+                                <tr ng-repeat="tar in implantacoes.selectedImplantacao.tarefas">
                                     <td>{{tar.id}}</td>
                                     <td>{{tar.nome}}</td>
                                     <td ng-bind-html="tar.descricao|nl2br"></td>
@@ -63,7 +72,7 @@
                 <div class="row" ng-if="currentUserIsImplantador()">
                     <div class="col-lg-12 text-center">
                         <button type="button" class="btn btn-default btn-danger" ng-click="remove(service.selectedImplantacao)"><i class="fa fa-trash-o"></i> Cancelar Implantação</button>
-                        <button type="button" class="btn btn-default btn-primary" ng-click="finish(service.selectedImplantacao)"><i class="fa fa-bolt"></i> Atribuir</button>
+                        <button type="button" class="btn btn-default btn-primary" ng-click="finish(service.selectedImplantacao)"><i class="fa fa-bolt"></i> Finalizar Implantação</button>
                     </div>
                 </div>
             </div>

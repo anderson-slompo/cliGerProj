@@ -42,20 +42,26 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th>Nome</th>
-                                    <th class="text-center">Descrição</th>
+                                    <th class="text-center">Nome</th>
+                                    <th class="text-center">Funcionário</th>
+                                    <th class="text-center">Criação</th>
                                     <th class="text-center">Qtd. tarefas</th>
+                                    <th>Descrição</th>                                    
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="impl in implantacoes.implantacoes">
                                     <td class="text-center">{{impl.id}}</td>
-                                    <td>{{impl.nome}}</td>
-                                    <td class="text-center">{{impl.id_externo}}</td>
+                                    <td class="text-center">{{impl.nome}}</td>
+                                    <td class="text-center">{{impl.funcionario_nome}}</td>
+                                    <td class="text-center">{{impl.data_hora}}</td>
+                                    <td class="text-center">{{impl.tot_tarefas}}</td>
+                                    <td ng-bind-html="impl.descricao|nl2br"></td>
                                     <td class="text-center" >
                                         <a ui-sref="implantacao-show({id: impl.id})" class="fa fa-search" title="Visualizar implantação #{{impl.id}}"></a>&nbsp;
                                         <a class="fa fa-trash-o" title="Cancelar implantação #{{impl.id}}" ng-click="remove(impl)" href="javascript:void(0)" ng-if="currentUserIsImplantador()"></a>
+                                        <a class="fa fa-bolt" title="Finalizar implantação #{{impl.id}}" ng-click="finish(impl)" href="javascript:void(0)" ng-if="currentUserIsImplantador()"></a>
                                     </td>
                                 </tr>
                             </tbody>
