@@ -1,0 +1,64 @@
+{
+  "name": "angular-gantt",
+  "version": "1.3.3",
+  "description": "Gantt chart component for AngularJS",
+  "author": "Marco Schweighauser",
+  "contributors": [
+    "Rémi Alvergnat"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular-gantt/angular-gantt.git"
+  },
+  "homepage": "https://www.angular-gantt.com",
+  "bugs": "https://github.com/angular-gantt/angular-gantt/issues",
+  "keywords": [
+    "gantt",
+    "chart",
+    "angularjs"
+  ],
+  "scripts": {
+    "build": "grunt build",
+    "build-demo": "grunt buildDemo",
+    "build-site": "grunt buildSite",
+    "dist": "grunt dist",
+    "grunt": "grunt",
+    "serve": "cd demo && grunt serve",
+    "plunkr": "grunt plunker",
+    "test": "grunt test",
+    "upload-site": "grunt uploadSite",
+    "watch": "grunt build --force && grunt watch --force"
+  },
+  "main": "assets/angular-gantt.js",
+  "directories.doc": "docs",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-autoprefixer": "^3.0.3",
+    "grunt-cleanempty": "^1.0.3",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-gh-pages": "^2.0.0",
+    "grunt-html2js": "^0.3.5",
+    "grunt-karma": "^2.0.0",
+    "grunt-karma-coveralls": "^2.5.4",
+    "grunt-release-it": "^1.0.0",
+    "grunt-replace": "^1.0.1",
+    "grunt-run": "^0.6.0",
+    "jasmine-core": "^2.4.1",
+    "jshint-stylish": "^2.1.0",
+    "karma": "^1.3.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha-reporter": "^2.2.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.3",
+    "serve-static": "^1.12.1"
+  }
+}

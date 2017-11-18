@@ -221,3 +221,12 @@ appGerProjAdmin.factory("AnexosTarefa", function ($http) {
     };
     return self;
 });
+
+appGerProjAdmin.factory("GerProjGantt", function($http, $q){
+    var self = {
+        tarefasGantt: function(fncOk){
+            return $http.get(wsHost + 'gantt/tarefasGantt').success(fncOk);
+        }
+    };
+    return self;
+});

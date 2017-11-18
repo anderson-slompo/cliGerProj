@@ -35,7 +35,12 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     'ngAnimate',
     'ui.router',
     'ui.utils.masks',
-    'file-model'
+    'file-model',
+    'gantt',
+    'gantt.tree',
+    'gantt.progress',
+    'gantt.resizeSensor',
+    'gantt.tooltips'
 ]).run([
     'defaultErrorMessageResolver',
     function (defaultErrorMessageResolver) {
@@ -274,6 +279,15 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                     'main': {
                         templateUrl: 'templates/implantacao-edit.html',
                         controller: 'ImplantacaoCreateController'
+                    }
+                }
+            })
+            .state('gantt-view', {
+                url: "/gantt/view",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/gantt-view.html',
+                        controller: 'GantViewController'
                     }
                 }
             });

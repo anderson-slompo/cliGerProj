@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-titulo"><i class="fa fa-line-chart"></i> {{page_title}} </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-lg-12">
+        <div gantt 
+            data="data" 
+            headers="['month', 'day']"
+            column-width="getColumnWidth('day',0.7)"
+            view-scale="day"
+            max-height="500"
+            auto-expand="both">
+            <gantt-tree></gantt-tree>
+            <gantt-progress></gantt-progress>
+            <gantt-tooltips></gantt-tooltips>
+        </div>
+    </div>
+</div>
