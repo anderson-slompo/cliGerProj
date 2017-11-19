@@ -1,5 +1,5 @@
 appGerProjAdmin.controller("TarefaInteracaoController", function ($q, $scope, $stateParams, $state, toaster, TarefaAtribuicao, TarefaInteracaoService) {
-    $scope.page_title = "Interção com a tarefa"
+    $scope.page_title = "Interação com a tarefa"
     $scope.atribuicao = {};
     $scope.interacao = {};
 

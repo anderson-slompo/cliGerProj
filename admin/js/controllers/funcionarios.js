@@ -11,6 +11,10 @@ appGerProjAdmin.controller("FuncionarioCrudController", function ($scope, $state
     $scope.comboProjeto = {disponiveis: [], associados: []};
     $scope.comboDepartamento = {disponiveis: [], associados: []};
 
+    $scope.showPassWd = function(){
+        $("#senha").password();
+    };
+
     $scope.loadTipos = function () {
         FuncionarioService.getTiposContato(function (data) {
             $scope.tipos_contato = {};

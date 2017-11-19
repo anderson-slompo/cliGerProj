@@ -368,6 +368,16 @@ appGerProjAdmin.directive('ccSpinner', function () {
     }
 });
 
+appGerProjAdmin.directive('helpLink', function () {
+    return {
+        'restrict': 'AE',
+        'templateUrl': 'templates/help-link.html',
+        'scope': {
+            'pdf': '@'
+        }
+    }
+});
+
 appGerProjAdmin.filter('nl2br', function($sce){
     return function(msg,is_xhtml) { 
         var is_xhtml = is_xhtml || true;

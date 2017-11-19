@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header page-header-titulo"><i class="fa fa-briefcase"></i> {{page_title}} </h3>
+        <h3 class="page-header page-header-titulo"><i class="fa fa-briefcase"></i> {{page_title}} <help-link pdf="novo_funcionario.pdf"></help-link></h3>
     </div>
 </div>
 
@@ -37,11 +37,12 @@
                             <input class="form-control" id="login" name="login" ng-model="funcionarios.selectedFuncionario.login" required="" ng-minlength="3" ng-maxlength="50"/>
                             <p class="help-block">Usuário que será utilizado para acessar o sistema.</p>
                         </div>
-                        <div class="col-lg-6 form-group">
+                        <div class="col-lg-6 form-group" ng-init="showPassWd()">
                             <label>Senha</label>
-                            <input class="form-control" type="password" id="senha" name="senha" ng-model="funcionarios.selectedFuncionario.senha" ng-minlength="3" ng-maxlength="50" required=""/>
+                            <input class="form-control" type="password" id="senha" name="senha" ng-model="funcionarios.selectedFuncionario.senha" ng-minlength="3" ng-maxlength="50" required="" data-toggle="password"/>
                             <p class="help-block">Senha que será utilizado para acessar o sistema.</p>
                         </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-lg-6 form-group">
