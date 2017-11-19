@@ -39,7 +39,6 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
     'gantt',
     'gantt.tree',
     'gantt.progress',
-    'gantt.resizeSensor',
     'gantt.tooltips'
 ]).run([
     'defaultErrorMessageResolver',

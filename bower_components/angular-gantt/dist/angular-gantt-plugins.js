@@ -1766,7 +1766,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
                 }
 
                 if (scope.header === undefined) {
-                    scope.header = 'Name';
+                    scope.header = 'Tarefa';
                 }
 
                 if (scope.headerContent === undefined) {
