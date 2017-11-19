@@ -56,6 +56,7 @@ var appGerProjAdmin = angular.module('gerProjAdmin', [
             errorMessages["number"] = "Por favor digite um número válido";
             errorMessages["url"] = "Por favor digite uma URL válida no formato http(s)://www.google.com";
             errorMessages["brPhoneNumber"] = "Favor informar um telefone válido";
+            errorMessages["equalsTo"] = "Por favor certifique-se que a senha e a confirmação sejam iguais"
         });
     }
 ]);
@@ -289,6 +290,15 @@ appGerProjAdmin.config(function ($stateProvider, $urlRouterProvider) {
                         controller: 'GantViewController'
                     }
                 }
+            })
+            .state('change-password', {
+                url: "/change-password",
+                views: {
+                    'main': {
+                        templateUrl: 'templates/change-password.html',
+                        controller: 'ChangePasswordController'
+                    }
+                }
             });
 
     $urlRouterProvider.otherwise("/");
@@ -366,3 +376,25 @@ appGerProjAdmin.filter('nl2br', function($sce){
         return $sce.trustAsHtml(msg);
     }
 });
+
+appGerProjAdmin.directive('equalsTo', function() {
+    return {
+        restrict : 'A',
+        require : 'ngModel',
+        scope : {
+            otherModelValue : '=equalsTo'
+        },
+        link : function(scope, element, attributes, ngModel) {
+
+            ngModel.$validators.equalsTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch('otherModelValue', function() {
+                ngModel.$validate();
+            });
+        }
+    };
+});
+
+    

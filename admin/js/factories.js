@@ -230,3 +230,12 @@ appGerProjAdmin.factory("GerProjGantt", function($http, $q){
     };
     return self;
 });
+
+appGerProjAdmin.factory("ChangePassword", function($http, $q){
+    var self = {
+        change: function(data, fncOk, fncErr){
+            return $http.post(wsHost + 'password/change', data).success(fncOk).error(fncErr);
+        }
+    };
+    return self;
+});
