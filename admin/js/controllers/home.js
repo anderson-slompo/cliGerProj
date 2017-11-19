@@ -1,10 +1,11 @@
-appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope, TarefaAtribuicao, ErroService, DashGerente, toaster){
+appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope, TarefaAtribuicao, ErroService, DashGerente, Implantacao, ImplantacaoService, toaster){
     $scope.page_title = "Dashboard";
     $scope.atribuicoes = {};
     $scope.tarefasAguardandoAtribuicao = [];
     $scope.statusProjetos = [];
     $scope.tarefasAtrasadas = [];
     $scope.tarefasExecucao = [];
+    $scope.implantacoesExecucao = [];
 
     $scope.DEPARTAMENTO_DEV   = 1;
     $scope.DEPARTAMENTO_TESTE = 2;
@@ -22,6 +23,27 @@ appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope,
                 body: "Erro ao carregar tarefas"
             });
         });
+    }
+
+    if(Utils.currentUserIsImplantador()){
+        Implantacao.dash({fake:1}, function(data){
+            $scope.implantacoesExecucao = JSON.parse(angular.toJson(data));
+        });
+
+        $scope.remove = function (impl) {
+            if(confirm("Deseja mesmo cancelar a implantacao #"+impl.id+" "+impl.nome+"?")){
+                ImplantacaoService.removeImplantacao(impl).then(function () {
+                    $state.go("home", {}, {reload:true});
+                });
+            }
+        };
+        $scope.finish = function(impl){
+            if(confirm("Deseja mesmo finalizar a implantacao #"+impl.id+" "+impl.nome+"?")){
+                ImplantacaoService.finishImplantacao(impl).then(function () {
+                    $state.go("home", {}, {reload:true});
+                });
+            }
+        };
     }
 
     if(Utils.currentUserIsGerente()){

@@ -16,3 +16,23 @@
         </div>        
     </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-12">        
+        <div class="panel panel-default">
+            <div class="panel-heading">Implantações em andamento</div>
+            <div class="panel-body">
+                <div class="list-group list-group-flush">
+                    <span class="list-group-item" ng-class="{'list-group-item-danger': impl.atrasada}" ng-repeat="impl in implantacoesExecucao" >
+                        <a ui-sref="implantacao-show({id: impl.id})" class="fa fa-search" title="Visualizar implantação #{{impl.id}}"></a>&nbsp;
+                        <a class="fa fa-trash-o" title="Cancelar implantação #{{impl.id}}" ng-click="remove(impl)" href="javascript:void(0)" ng-if="currentUserIsImplantador() && impl.status == 0"></a>&nbsp;
+                        <a class="fa fa-bolt" title="Finalizar implantação #{{impl.id}}" ng-click="finish(impl)" href="javascript:void(0)" ng-if="currentUserIsImplantador() && impl.status == 0"></a>&nbsp;
+                        {{impl.nome}} 
+                        <span class="pull-right text-muted medium">Previsão {{impl.previsao_inicio}} até {{impl.previsao_fim}} | Total de tarefas: {{impl.tot_tarefas}}</span>
+                    </span>
+                    <span class="list-group-item" ng-if="implantacoesExecucao.length == 0 || implantacoesExecucao == undefined">Nenhuma implantação em andamento</span>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>

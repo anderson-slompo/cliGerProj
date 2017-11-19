@@ -42,6 +42,11 @@ appGerProjAdmin.factory("Implantacao", function ($resource) {
         update: {
             method: 'PUT',
             url: wsHost + "implantacao/finish/:id"
+        },
+        dash:{
+            method:'GET',
+            isArray: true,
+            url: wsHost + "implantacao/dash"
         }
     });
 });
