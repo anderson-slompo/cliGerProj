@@ -3,6 +3,9 @@
         <h3 class="page-header page-header-titulo">
             <i class="fa fa-dashboard"></i> {{page_title}} 
             <help-link pdf="dash_gerente.pdf" ng-if="currentUserIsGerente()"></help-link>
+            <help-link pdf="dash_desenvolvedor.pdf" ng-if="currentUserIsDesenvolvedor()"></help-link>
+            <help-link pdf="dash_tester.pdf" ng-if="currentUserIsTester()"></help-link>
+            <help-link pdf="dash_implantador.pdf" ng-if="currentUserIsImplantador()"></help-link>
         </h3>
     </div>
 </div>

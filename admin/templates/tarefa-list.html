@@ -10,7 +10,7 @@
             <div class="panel-heading panel-header-color">
                 <span>Pesquisa</span>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-default btn-xs btn-success" ui-sref="tarefa-create">Nova Tarefa</button>
+                    <button type="button" class="btn btn-default btn-xs btn-success" ui-sref="tarefa-create" ng-if="currentUserIsGerente()">Nova Tarefa</button>
                 </div>
             </div>
             <div class="panel-body">
