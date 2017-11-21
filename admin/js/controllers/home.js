@@ -32,14 +32,16 @@ appGerProjAdmin.controller('HomeController',function($scope, $state, $rootScope,
 
         $scope.remove = function (impl) {
             if(confirm("Deseja mesmo cancelar a implantacao #"+impl.id+" "+impl.nome+"?")){
-                ImplantacaoService.removeImplantacao(impl).then(function () {
+                var implObj = new Implantacao(impl);
+                ImplantacaoService.removeImplantacao(implObj).then(function () {
                     $state.go("home", {}, {reload:true});
                 });
             }
         };
         $scope.finish = function(impl){
             if(confirm("Deseja mesmo finalizar a implantacao #"+impl.id+" "+impl.nome+"?")){
-                ImplantacaoService.finishImplantacao(impl).then(function () {
+                var implObj = new Implantacao(impl);
+                ImplantacaoService.finishImplantacao(implObj).then(function () {
                     $state.go("home", {}, {reload:true});
                 });
             }
